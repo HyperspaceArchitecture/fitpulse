@@ -24,6 +24,7 @@ class SharedPreferencesThemePreferences implements ThemePreferences {
     final storedValue = await _preferences.getString(_key);
     if (storedValue == 'ochre') return AppThemeVariant.studioLilac;
     if (storedValue == 'pulseBlue') return AppThemeVariant.graphite;
+    if (storedValue == 'cloudPop') return AppThemeVariant.softArcade;
     return AppThemeVariant.values.firstWhere(
       (variant) => variant.name == storedValue,
       orElse: () => AppThemeVariant.graphite,

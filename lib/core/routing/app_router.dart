@@ -1,6 +1,7 @@
 import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:fitpulse/features/coach/presentation/pages/coach_page.dart';
 import 'package:fitpulse/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -43,6 +44,9 @@ abstract final class AppRoutes {
 
   /// Active set-by-set workout session.
   static const workoutSession = '/workouts/session';
+
+  /// Privacy-first coaching conversation.
+  static const coach = '/coach';
 }
 
 /// Owns the router and disposes it with the provider container.
@@ -88,6 +92,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.workoutSession,
         builder: (context, state) => const WorkoutSessionPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.coach,
+        builder: (context, state) => const CoachPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

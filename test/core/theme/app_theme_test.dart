@@ -27,15 +27,16 @@ void main() {
       expect(colors.glow, const Color(0xFFDCC8F5));
     });
 
-    test('builds a friendly Cloud Pop palette', () {
-      final theme = FitPulseTheme.forVariant(AppThemeVariant.cloudPop);
+    test('builds a friendly Soft Arcade palette with bundled type', () {
+      final theme = FitPulseTheme.forVariant(AppThemeVariant.softArcade);
       final colors = theme.extension<FitPulseColors>()!;
 
       expect(theme.brightness, Brightness.light);
-      expect(theme.colorScheme.primary, const Color(0xFF76B7A3));
-      expect(theme.colorScheme.secondary, const Color(0xFFF3B5A7));
-      expect(theme.colorScheme.tertiary, const Color(0xFF88B5E4));
-      expect(colors.background, const Color(0xFFF3F7F4));
+      expect(theme.textTheme.bodyMedium?.fontFamily, 'Fredoka');
+      expect(theme.colorScheme.primary, const Color(0xFF6F63D9));
+      expect(theme.colorScheme.secondary, const Color(0xFFFF9B86));
+      expect(theme.colorScheme.tertiary, const Color(0xFF68C4BF));
+      expect(colors.background, const Color(0xFFFFF9F3));
     });
   });
 }

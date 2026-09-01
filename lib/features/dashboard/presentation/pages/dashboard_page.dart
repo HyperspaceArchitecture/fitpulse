@@ -70,13 +70,19 @@ class _DashboardHeader extends StatelessWidget {
       children: [
         const BrandMark(),
         const Spacer(),
+        IconButton.filledTonal(
+          tooltip: 'Open AI Coach',
+          onPressed: () => context.go(AppRoutes.coach),
+          icon: const Icon(Icons.auto_awesome_rounded),
+        ),
+        const SizedBox(width: 10),
         if (profile != null)
           IconButton.filledTonal(
             tooltip: 'Edit fitness profile',
             onPressed: () => context.go(AppRoutes.onboarding),
             icon: const Icon(Icons.person_outline_rounded),
           ),
-        const SizedBox(width: 10),
+        if (profile != null) const SizedBox(width: 10),
         const ThemeSelector(),
       ],
     );

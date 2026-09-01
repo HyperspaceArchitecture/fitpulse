@@ -72,7 +72,7 @@ abstract final class FitPulseTheme {
     final palette = switch (variant) {
       AppThemeVariant.graphite => _graphite,
       AppThemeVariant.studioLilac => _studioLilac,
-      AppThemeVariant.cloudPop => _cloudPop,
+      AppThemeVariant.softArcade => _softArcade,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
@@ -86,6 +86,7 @@ abstract final class FitPulseTheme {
     final base = ThemeData(
       useMaterial3: true,
       brightness: palette.brightness,
+      fontFamily: palette.fontFamily,
       colorScheme: scheme,
       scaffoldBackgroundColor: palette.colors.background,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -216,19 +217,20 @@ abstract final class FitPulseTheme {
     ),
   );
 
-  static const _cloudPop = _ThemePalette(
+  static const _softArcade = _ThemePalette(
     brightness: Brightness.light,
-    primary: Color(0xFF76B7A3),
-    secondary: Color(0xFFF3B5A7),
-    tertiary: Color(0xFF88B5E4),
+    primary: Color(0xFF6F63D9),
+    secondary: Color(0xFFFF9B86),
+    tertiary: Color(0xFF68C4BF),
     friendly: true,
+    fontFamily: 'Fredoka',
     colors: FitPulseColors(
-      background: Color(0xFFF3F7F4),
+      background: Color(0xFFFFF9F3),
       panel: Color(0xFFFFFFFF),
-      success: Color(0xFF76B7A3),
-      warning: Color(0xFFF3C96B),
-      danger: Color(0xFFE87878),
-      glow: Color(0xFFBFE2D8),
+      success: Color(0xFF55B99D),
+      warning: Color(0xFFF5C15B),
+      danger: Color(0xFFE96F79),
+      glow: Color(0xFFD8D1FF),
     ),
   );
 }
@@ -241,6 +243,7 @@ class _ThemePalette {
     required this.tertiary,
     required this.friendly,
     required this.colors,
+    this.fontFamily,
   });
 
   final Brightness brightness;
@@ -249,4 +252,5 @@ class _ThemePalette {
   final Color tertiary;
   final bool friendly;
   final FitPulseColors colors;
+  final String? fontFamily;
 }

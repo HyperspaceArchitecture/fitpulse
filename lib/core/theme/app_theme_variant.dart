@@ -2,7 +2,7 @@
 enum AppThemeVariant {
   graphite('Graphite', 'Masculine, contemporary and focused'),
   studioLilac('Studio', 'Soft, expressive and editorial'),
-  cloudPop('Cloud Pop', 'Calming, friendly and playful');
+  softArcade('Soft Arcade', 'Clean, polished and playfully rounded');
 
   const AppThemeVariant(this.label, this.description);
 

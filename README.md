@@ -10,7 +10,7 @@ application built with Flutter and Material 3.
 - Riverpod for dependency injection and state management
 - GoRouter for declarative navigation
 - Material 3 design tokens and reusable glass surfaces
-- Persisted Graphite, Studio Lilac, and Cloud Pop visual systems
+- Persisted Graphite, Studio Lilac, and Soft Arcade visual systems
 - Responsive layouts for phones, tablets, foldables, web, and desktop
 - Backend-agnostic boundaries; no backend SDK is currently installed
 
@@ -24,6 +24,7 @@ application built with Flutter and Material 3.
 - `/dashboard` — personalized daily training and recovery command centre
 - `/workouts` — structured workout plan and movement prescription
 - `/workouts/session` — live set, rest timer, cue, and completion engine
+- `/coach` — private offline coaching conversation and safety fallback
 - `/today` — interactive daily-readiness preview
 - `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
 
@@ -58,4 +59,4 @@ flutter run
 ```
 
 The selected visual system is stored locally and restored at launch. Use the
-theme selector on the foundation screen to review Graphite, Studio Lilac, and Cloud Pop.
+theme selector on the foundation screen to review Graphite, Studio Lilac, and Soft Arcade.

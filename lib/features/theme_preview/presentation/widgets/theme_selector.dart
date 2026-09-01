@@ -67,6 +67,6 @@ class ThemeSelector extends ConsumerWidget {
   IconData _iconFor(AppThemeVariant variant) => switch (variant) {
     AppThemeVariant.graphite => Icons.bolt_rounded,
     AppThemeVariant.studioLilac => Icons.auto_awesome_rounded,
-    AppThemeVariant.cloudPop => Icons.cloud_rounded,
+    AppThemeVariant.softArcade => Icons.bubble_chart_rounded,
   };
 }
