@@ -245,7 +245,7 @@ class _WorkoutCard extends StatelessWidget {
           ),
           const SizedBox(height: 26),
           FilledButton.icon(
-            onPressed: () {},
+            onPressed: () => context.go(AppRoutes.workouts),
             icon: const Icon(Icons.play_arrow_rounded),
             label: const Text('Start workout'),
           ),

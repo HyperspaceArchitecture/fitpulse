@@ -22,6 +22,8 @@ application built with Flutter and Material 3.
 - `/forgot-password` — password-recovery presentation
 - `/onboarding` — offline-first fitness profile setup
 - `/dashboard` — personalized daily training and recovery command centre
+- `/workouts` — structured workout plan and movement prescription
+- `/workouts/session` — live set, rest timer, cue, and completion engine
 - `/today` — interactive daily-readiness preview
 - `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
 

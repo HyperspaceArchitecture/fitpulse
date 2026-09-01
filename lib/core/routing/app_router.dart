@@ -6,6 +6,8 @@ import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
 import 'package:fitpulse/features/theme_preview/presentation/pages/theme_preview_page.dart';
+import 'package:fitpulse/features/workout/presentation/pages/workout_plan_page.dart';
+import 'package:fitpulse/features/workout/presentation/pages/workout_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +37,12 @@ abstract final class AppRoutes {
 
   /// Holistic progress and body-trend screen.
   static const progress = '/progress';
+
+  /// Today's workout plan overview.
+  static const workouts = '/workouts';
+
+  /// Active set-by-set workout session.
+  static const workoutSession = '/workouts/session';
 }
 
 /// Owns the router and disposes it with the provider container.
@@ -72,6 +80,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.progress,
         builder: (context, state) => const ProgressPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.workouts,
+        builder: (context, state) => const WorkoutPlanPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.workoutSession,
+        builder: (context, state) => const WorkoutSessionPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
