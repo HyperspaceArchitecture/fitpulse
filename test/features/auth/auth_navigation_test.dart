@@ -1,8 +1,10 @@
 import 'package:fitpulse/app.dart';
 import 'package:fitpulse/core/theme/theme_preferences.dart';
+import 'package:fitpulse/features/onboarding/data/profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/in_memory_profile_repository.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
 
 void main() {
@@ -14,6 +16,9 @@ void main() {
         overrides: [
           themePreferencesProvider.overrideWithValue(
             InMemoryThemePreferences(),
+          ),
+          profileRepositoryProvider.overrideWithValue(
+            InMemoryProfileRepository(),
           ),
         ],
         child: const FitPulseApp(),
@@ -41,8 +46,8 @@ void main() {
     await tester.tap(find.text('Back to sign in'));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Continue to app preview'));
-    await tester.tap(find.text('Continue to app preview'));
+    await tester.ensureVisible(find.text('Continue offline'));
+    await tester.tap(find.text('Continue offline'));
     await tester.pumpAndSettle();
 
     expect(find.text('Ready to move?'), findsOneWidget);

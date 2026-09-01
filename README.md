@@ -10,7 +10,7 @@ application built with Flutter and Material 3.
 - Riverpod for dependency injection and state management
 - GoRouter for declarative navigation
 - Material 3 design tokens and reusable glass surfaces
-- Persisted Pulse Blue and Ochre visual systems
+- Persisted Volt Lime and Studio Lilac visual systems
 - Responsive layouts for phones, tablets, foldables, web, and desktop
 - Backend-agnostic boundaries; no backend SDK is currently installed
 
@@ -21,6 +21,7 @@ application built with Flutter and Material 3.
 - `/register` — account-creation presentation with consent state
 - `/forgot-password` — password-recovery presentation
 - `/onboarding` — offline-first fitness profile setup
+- `/dashboard` — personalized daily training and recovery command centre
 - `/today` — interactive daily-readiness preview
 - `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
 
@@ -55,4 +56,4 @@ flutter run
 ```
 
 The selected visual system is stored locally and restored at launch. Use the
-theme selector on the foundation screen to review Pulse Blue and Ochre.
+theme selector on the foundation screen to review Volt Lime and Studio Lilac.

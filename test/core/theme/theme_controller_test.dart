@@ -21,12 +21,12 @@ void main() {
 
     await container
         .read(themeControllerProvider.notifier)
-        .select(AppThemeVariant.ochre);
+        .select(AppThemeVariant.studioLilac);
 
     expect(
       container.read(themeControllerProvider).value,
-      AppThemeVariant.ochre,
+      AppThemeVariant.studioLilac,
     );
-    expect(preferences.value, AppThemeVariant.ochre);
+    expect(preferences.value, AppThemeVariant.studioLilac);
   });
 }

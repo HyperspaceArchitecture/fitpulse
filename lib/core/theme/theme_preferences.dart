@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Persistence boundary for the user's selected visual system.
 abstract interface class ThemePreferences {
-  /// Reads the saved theme, falling back to Pulse Blue.
+  /// Reads the saved theme, falling back to Volt Lime.
   Future<AppThemeVariant> read();
 
   /// Persists [variant] for future launches.
@@ -22,6 +22,7 @@ class SharedPreferencesThemePreferences implements ThemePreferences {
   @override
   Future<AppThemeVariant> read() async {
     final storedValue = await _preferences.getString(_key);
+    if (storedValue == 'ochre') return AppThemeVariant.studioLilac;
     return AppThemeVariant.values.firstWhere(
       (variant) => variant.name == storedValue,
       orElse: () => AppThemeVariant.pulseBlue,

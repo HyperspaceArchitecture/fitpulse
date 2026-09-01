@@ -69,7 +69,7 @@ void main() {
     await tester.tap(find.text('Create my plan'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Ready to move?'), findsOneWidget);
+    expect(find.text('Ready, Sam?'), findsOneWidget);
     expect(profiles.value?.displayName, 'Sam');
     expect(profiles.value?.goal, FitnessGoal.buildStrength);
     expect(profiles.value?.currentWeightKg, 75);

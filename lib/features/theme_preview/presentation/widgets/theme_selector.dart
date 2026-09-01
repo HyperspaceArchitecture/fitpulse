@@ -23,8 +23,8 @@ class ThemeSelector extends ConsumerWidget {
               value: variant,
               icon: Icon(
                 variant == AppThemeVariant.pulseBlue
-                    ? Icons.water_drop_rounded
-                    : Icons.wb_sunny_rounded,
+                    ? Icons.bolt_rounded
+                    : Icons.auto_awesome_rounded,
               ),
               label: Text(variant.label),
             ),

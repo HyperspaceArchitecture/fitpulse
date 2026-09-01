@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
 
 void main() {
-  testWidgets('switches from Pulse Blue to Ochre and persists the choice', (
+  testWidgets('switches from Volt Lime to Studio Lilac and persists it', (
     tester,
   ) async {
     final preferences = InMemoryThemePreferences();
@@ -23,16 +23,16 @@ void main() {
     expect(find.textContaining('Train smarter.'), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).colorScheme.primary,
-      const Color(0xFF2E7DFF),
+      const Color(0xFF91F313),
     );
 
-    await tester.tap(find.text('Ochre'));
+    await tester.tap(find.text('Studio Lilac'));
     await tester.pumpAndSettle();
 
-    expect(preferences.value, AppThemeVariant.ochre);
+    expect(preferences.value, AppThemeVariant.studioLilac);
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).colorScheme.primary,
-      const Color(0xFFD9A441),
+      const Color(0xFFB69AE8),
     );
   });
 }

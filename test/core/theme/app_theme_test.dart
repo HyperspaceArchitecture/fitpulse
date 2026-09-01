@@ -5,23 +5,26 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('FitPulseTheme', () {
-    test('builds the requested Pulse Blue palette', () {
+    test('builds the requested Volt Lime palette', () {
       final theme = FitPulseTheme.forVariant(AppThemeVariant.pulseBlue);
       final colors = theme.extension<FitPulseColors>()!;
 
       expect(theme.useMaterial3, isTrue);
-      expect(theme.brightness, Brightness.dark);
-      expect(theme.colorScheme.primary, const Color(0xFF2E7DFF));
-      expect(colors.background, const Color(0xFF101214));
+      expect(theme.brightness, Brightness.light);
+      expect(theme.colorScheme.primary, const Color(0xFF91F313));
+      expect(theme.colorScheme.secondary, const Color(0xFFFF8E93));
+      expect(theme.colorScheme.tertiary, const Color(0xFF34C6D3));
+      expect(colors.background, const Color(0xFFF0F0EE));
     });
 
-    test('builds a distinct ochre palette', () {
-      final theme = FitPulseTheme.forVariant(AppThemeVariant.ochre);
+    test('builds a distinct Studio Lilac palette', () {
+      final theme = FitPulseTheme.forVariant(AppThemeVariant.studioLilac);
       final colors = theme.extension<FitPulseColors>()!;
 
-      expect(theme.colorScheme.primary, const Color(0xFFD9A441));
-      expect(colors.background, const Color(0xFF14110C));
-      expect(colors.glow, const Color(0xFF9A6820));
+      expect(theme.colorScheme.primary, const Color(0xFFB69AE8));
+      expect(theme.colorScheme.secondary, const Color(0xFFF1C9D4));
+      expect(colors.background, const Color(0xFFF1F0EF));
+      expect(colors.glow, const Color(0xFFDCC8F5));
     });
   });
 }

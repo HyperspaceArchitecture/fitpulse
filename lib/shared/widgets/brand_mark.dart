@@ -25,9 +25,9 @@ class BrandMark extends StatelessWidget {
               ),
             ],
           ),
-          child: const SizedBox.square(
+          child: SizedBox.square(
             dimension: 44,
-            child: Icon(Icons.bolt_rounded, color: Colors.white),
+            child: Icon(Icons.bolt_rounded, color: theme.colorScheme.onPrimary),
           ),
         ),
         if (!compact) ...[

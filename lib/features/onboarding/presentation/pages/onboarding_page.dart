@@ -100,7 +100,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
     try {
       await ref.read(profileControllerProvider.notifier).save(profile);
-      if (mounted) context.go(AppRoutes.today);
+      if (mounted) context.go(AppRoutes.dashboard);
     } on Object {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -597,7 +597,9 @@ class _BodyContextStep extends StatelessWidget {
             subtitle: showErrors && !acceptedSafety
                 ? Text(
                     'Required to continue',
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   )
                 : null,
           ),

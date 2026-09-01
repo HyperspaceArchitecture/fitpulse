@@ -1,7 +1,7 @@
 /// The production visual systems available to FitPulse.
 enum AppThemeVariant {
-  pulseBlue('Pulse Blue', 'Cool, focused and energetic'),
-  ochre('Ochre', 'Warm, grounded and resilient');
+  pulseBlue('Volt Lime', 'Bold, graphic and high energy'),
+  studioLilac('Studio Lilac', 'Soft, expressive and editorial');
 
   const AppThemeVariant(this.label, this.description);
 

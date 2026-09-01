@@ -1,6 +1,7 @@
 import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:fitpulse/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
@@ -25,6 +26,9 @@ abstract final class AppRoutes {
 
   /// Offline-first fitness profile setup.
   static const onboarding = '/onboarding';
+
+  /// Personalized daily member dashboard.
+  static const dashboard = '/dashboard';
 
   /// Interactive Today experience preview.
   static const today = '/today';
@@ -56,6 +60,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.onboarding,
         builder: (context, state) => const OnboardingPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.dashboard,
+        builder: (context, state) => const DashboardPage(),
       ),
       GoRoute(
         path: AppRoutes.today,

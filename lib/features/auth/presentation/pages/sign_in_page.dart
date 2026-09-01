@@ -95,8 +95,8 @@ class _SignInPageState extends State<SignInPage> {
               ),
               const SizedBox(height: 12),
               OutlinedButton(
-                onPressed: () => context.go(AppRoutes.today),
-                child: const Text('Continue to app preview'),
+                onPressed: () => context.go(AppRoutes.dashboard),
+                child: const Text('Continue offline'),
               ),
               const SizedBox(height: 18),
               Row(

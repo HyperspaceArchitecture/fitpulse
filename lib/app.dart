@@ -21,7 +21,7 @@ class FitPulseApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: FitPulseTheme.forVariant(selectedTheme),
       darkTheme: FitPulseTheme.forVariant(selectedTheme),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       routerConfig: router,
     );
   }

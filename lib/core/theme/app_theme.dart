@@ -67,23 +67,24 @@ class FitPulseColors extends ThemeExtension<FitPulseColors> {
 
 /// Builds the complete Material 3 design system for each FitPulse theme.
 abstract final class FitPulseTheme {
-  /// Returns a dark, premium theme for [variant].
+  /// Returns the premium editorial theme for [variant].
   static ThemeData forVariant(AppThemeVariant variant) {
     final palette = switch (variant) {
       AppThemeVariant.pulseBlue => _pulseBlue,
-      AppThemeVariant.ochre => _ochre,
+      AppThemeVariant.studioLilac => _studioLilac,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
-      brightness: Brightness.dark,
+      brightness: palette.brightness,
       primary: palette.primary,
       secondary: palette.secondary,
+      tertiary: palette.tertiary,
       surface: palette.colors.panel,
       error: palette.colors.danger,
     );
     final base = ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: palette.brightness,
       colorScheme: scheme,
       scaffoldBackgroundColor: palette.colors.background,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -100,7 +101,8 @@ abstract final class FitPulseTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size(48, 52),
+          foregroundColor: scheme.onPrimary,
+          minimumSize: const Size(48, 54),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -109,7 +111,7 @@ abstract final class FitPulseTheme {
       ),
       inputDecorationTheme: InputDecorationThemeData(
         filled: true,
-        fillColor: scheme.onSurface.withValues(alpha: 0.04),
+        fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.68),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 18,
           vertical: 18,
@@ -141,7 +143,8 @@ abstract final class FitPulseTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: palette.colors.panel,
+        backgroundColor: scheme.inverseSurface,
+        contentTextStyle: TextStyle(color: scheme.onInverseSurface),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
@@ -160,56 +163,67 @@ abstract final class FitPulseTheme {
   static TextTheme _textTheme(TextTheme base) {
     return base.copyWith(
       displaySmall: base.displaySmall?.copyWith(
-        fontSize: 42,
-        height: 1.02,
-        fontWeight: FontWeight.w800,
-        letterSpacing: -1.6,
+        fontSize: 46,
+        height: 0.96,
+        fontWeight: FontWeight.w900,
+        letterSpacing: -2.2,
       ),
       headlineMedium: base.headlineMedium?.copyWith(
-        fontWeight: FontWeight.w700,
-        letterSpacing: -0.8,
+        fontWeight: FontWeight.w900,
+        letterSpacing: -1.1,
       ),
-      titleLarge: base.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+      titleLarge: base.titleLarge?.copyWith(
+        fontWeight: FontWeight.w900,
+        letterSpacing: -0.5,
+      ),
       bodyLarge: base.bodyLarge?.copyWith(height: 1.5),
       labelLarge: base.labelLarge?.copyWith(fontWeight: FontWeight.w700),
     );
   }
 
   static const _pulseBlue = _ThemePalette(
-    primary: Color(0xFF2E7DFF),
-    secondary: Color(0xFF00C853),
+    brightness: Brightness.light,
+    primary: Color(0xFF91F313),
+    secondary: Color(0xFFFF8E93),
+    tertiary: Color(0xFF34C6D3),
     colors: FitPulseColors(
-      background: Color(0xFF101214),
-      panel: Color(0xFF171A1F),
-      success: Color(0xFF00C853),
-      warning: Color(0xFFFF9800),
-      danger: Color(0xFFE53935),
-      glow: Color(0xFF166FC1),
+      background: Color(0xFFF0F0EE),
+      panel: Color(0xFFFFFFFF),
+      success: Color(0xFF35B86B),
+      warning: Color(0xFFFFBF45),
+      danger: Color(0xFFE74962),
+      glow: Color(0xFF91F313),
     ),
   );
 
-  static const _ochre = _ThemePalette(
-    primary: Color(0xFFD9A441),
-    secondary: Color(0xFFF0C96A),
+  static const _studioLilac = _ThemePalette(
+    brightness: Brightness.light,
+    primary: Color(0xFFB69AE8),
+    secondary: Color(0xFFF1C9D4),
+    tertiary: Color(0xFFEF405F),
     colors: FitPulseColors(
-      background: Color(0xFF14110C),
-      panel: Color(0xFF211B12),
-      success: Color(0xFF94B67A),
-      warning: Color(0xFFE3A33B),
-      danger: Color(0xFFE15B45),
-      glow: Color(0xFF9A6820),
+      background: Color(0xFFF1F0EF),
+      panel: Color(0xFFFFFFFF),
+      success: Color(0xFF78A883),
+      warning: Color(0xFFE0A84A),
+      danger: Color(0xFFEF405F),
+      glow: Color(0xFFDCC8F5),
     ),
   );
 }
 
 class _ThemePalette {
   const _ThemePalette({
+    required this.brightness,
     required this.primary,
     required this.secondary,
+    required this.tertiary,
     required this.colors,
   });
 
+  final Brightness brightness;
   final Color primary;
   final Color secondary;
+  final Color tertiary;
   final FitPulseColors colors;
 }
