@@ -14,6 +14,17 @@ application built with Flutter and Material 3.
 - Responsive layouts for phones, tablets, foldables, web, and desktop
 - Backend-agnostic boundaries; no backend SDK is currently installed
 
+## Available screens
+
+- `/` — premium landing experience
+- `/sign-in` — validated sign-in presentation
+- `/register` — account-creation presentation with consent state
+- `/forgot-password` — password-recovery presentation
+- `/today` — interactive daily-readiness preview
+
+Authentication screens are intentionally marked as previews until a backend is
+selected. They validate locally and never transmit credentials.
+
 ## Project structure
 
 ```text

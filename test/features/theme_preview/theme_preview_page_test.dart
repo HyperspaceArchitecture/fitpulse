@@ -20,7 +20,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Ready to move?'), findsOneWidget);
+    expect(find.textContaining('Train smarter.'), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).colorScheme.primary,
       const Color(0xFF2E7DFF),

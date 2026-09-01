@@ -1,3 +1,4 @@
+import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
 import 'package:fitpulse/core/theme/app_theme_variant.dart';
 import 'package:fitpulse/core/theme/theme_controller.dart';
@@ -6,6 +7,7 @@ import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selec
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// Production foundation screen for reviewing FitPulse design systems.
 class ThemePreviewPage extends ConsumerWidget {
@@ -73,15 +75,10 @@ class _Header extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: const SizedBox.square(
-                dimension: 44,
-                child: Icon(Icons.bolt_rounded, color: Colors.white),
-              ),
+            IconButton.filledTonal(
+              tooltip: 'Back to landing',
+              onPressed: () => context.go(AppRoutes.landing),
+              icon: const Icon(Icons.arrow_back_rounded),
             ),
             const SizedBox(width: 12),
             Text('FITPULSE', style: theme.textTheme.titleLarge),
