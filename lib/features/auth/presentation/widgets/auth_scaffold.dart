@@ -178,7 +178,7 @@ class AuthConnectionNotice extends StatelessWidget {
             const SizedBox(width: 10),
             const Expanded(
               child: Text(
-                'Screen preview only. No credentials leave this device.',
+                'Offline mode. Passwords are validated but never stored or sent.',
               ),
             ),
           ],

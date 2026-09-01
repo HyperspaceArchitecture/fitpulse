@@ -29,17 +29,11 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  void _validatePreview() {
+  void _continueToOnboarding() {
     final valid = _formKey.currentState?.validate() ?? false;
     if (!valid || !_acceptedTerms) return;
     FocusManager.instance.primaryFocus?.unfocus();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Form is valid. Connect an auth service to create accounts.',
-        ),
-      ),
-    );
+    context.go(AppRoutes.onboarding);
   }
 
   @override
@@ -107,8 +101,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 12),
             FilledButton(
-              onPressed: _acceptedTerms ? _validatePreview : null,
-              child: const Text('Validate account details'),
+              onPressed: _acceptedTerms ? _continueToOnboarding : null,
+              child: const Text('Continue to profile'),
             ),
             const SizedBox(height: 18),
             Row(

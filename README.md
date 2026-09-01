@@ -20,6 +20,7 @@ application built with Flutter and Material 3.
 - `/sign-in` — validated sign-in presentation
 - `/register` — account-creation presentation with consent state
 - `/forgot-password` — password-recovery presentation
+- `/onboarding` — offline-first fitness profile setup
 - `/today` — interactive daily-readiness preview
 - `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
 

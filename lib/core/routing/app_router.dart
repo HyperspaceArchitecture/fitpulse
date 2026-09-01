@@ -2,6 +2,7 @@ import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.d
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
+import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
 import 'package:fitpulse/features/theme_preview/presentation/pages/theme_preview_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,9 @@ abstract final class AppRoutes {
 
   /// Password-recovery screen.
   static const forgotPassword = '/forgot-password';
+
+  /// Offline-first fitness profile setup.
+  static const onboarding = '/onboarding';
 
   /// Interactive Today experience preview.
   static const today = '/today';
@@ -48,6 +52,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.forgotPassword,
         builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.onboarding,
+        builder: (context, state) => const OnboardingPage(),
       ),
       GoRoute(
         path: AppRoutes.today,
