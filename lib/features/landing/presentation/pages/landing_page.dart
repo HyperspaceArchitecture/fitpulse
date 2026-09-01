@@ -145,6 +145,11 @@ class _HeroCopy extends StatelessWidget {
               icon: const Icon(Icons.visibility_rounded),
               label: const Text('Explore preview'),
             ),
+            TextButton.icon(
+              onPressed: () => context.go(AppRoutes.progress),
+              icon: const Icon(Icons.insights_rounded),
+              label: const Text('View progress'),
+            ),
           ],
         ),
         const SizedBox(height: 28),

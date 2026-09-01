@@ -84,7 +84,18 @@ class _Header extends StatelessWidget {
             Text('FITPULSE', style: theme.textTheme.titleLarge),
           ],
         ),
-        const ThemeSelector(),
+        Wrap(
+          spacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            const ThemeSelector(),
+            TextButton.icon(
+              onPressed: () => context.go(AppRoutes.progress),
+              icon: const Icon(Icons.insights_rounded),
+              label: const Text('Progress'),
+            ),
+          ],
+        ),
       ],
     );
   }

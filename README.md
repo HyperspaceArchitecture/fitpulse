@@ -21,6 +21,7 @@ application built with Flutter and Material 3.
 - `/register` — account-creation presentation with consent state
 - `/forgot-password` — password-recovery presentation
 - `/today` — interactive daily-readiness preview
+- `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
 
 Authentication screens are intentionally marked as previews until a backend is
 selected. They validate locally and never transmit credentials.

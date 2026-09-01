@@ -2,6 +2,7 @@ import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.d
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
+import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
 import 'package:fitpulse/features/theme_preview/presentation/pages/theme_preview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +24,9 @@ abstract final class AppRoutes {
 
   /// Interactive Today experience preview.
   static const today = '/today';
+
+  /// Holistic progress and body-trend screen.
+  static const progress = '/progress';
 }
 
 /// Owns the router and disposes it with the provider container.
@@ -48,6 +52,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.today,
         builder: (context, state) => const ThemePreviewPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.progress,
+        builder: (context, state) => const ProgressPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
