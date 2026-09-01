@@ -10,7 +10,7 @@ application built with Flutter and Material 3.
 - Riverpod for dependency injection and state management
 - GoRouter for declarative navigation
 - Material 3 design tokens and reusable glass surfaces
-- Persisted Volt Lime and Studio Lilac visual systems
+- Persisted Graphite, Studio Lilac, and Cloud Pop visual systems
 - Responsive layouts for phones, tablets, foldables, web, and desktop
 - Backend-agnostic boundaries; no backend SDK is currently installed
 
@@ -56,4 +56,4 @@ flutter run
 ```
 
 The selected visual system is stored locally and restored at launch. Use the
-theme selector on the foundation screen to review Volt Lime and Studio Lilac.
+theme selector on the foundation screen to review Graphite, Studio Lilac, and Cloud Pop.

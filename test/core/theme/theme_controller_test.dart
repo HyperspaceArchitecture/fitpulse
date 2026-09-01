@@ -16,7 +16,7 @@ void main() {
 
     expect(
       await container.read(themeControllerProvider.future),
-      AppThemeVariant.pulseBlue,
+      AppThemeVariant.graphite,
     );
 
     await container

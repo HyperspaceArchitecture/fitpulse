@@ -8,9 +8,13 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
 
 void main() {
-  testWidgets('switches from Volt Lime to Studio Lilac and persists it', (
+  testWidgets('switches from Graphite to Studio and persists it', (
     tester,
   ) async {
+    tester.view.physicalSize = const Size(1280, 720);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
     final preferences = InMemoryThemePreferences();
     await tester.pumpWidget(
       ProviderScope(
@@ -23,10 +27,10 @@ void main() {
     expect(find.textContaining('Train smarter.'), findsOneWidget);
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).colorScheme.primary,
-      const Color(0xFF91F313),
+      const Color(0xFF4D8DFF),
     );
 
-    await tester.tap(find.text('Studio Lilac'));
+    await tester.tap(find.text('Studio'));
     await tester.pumpAndSettle();
 
     expect(preferences.value, AppThemeVariant.studioLilac);

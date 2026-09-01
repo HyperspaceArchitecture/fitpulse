@@ -13,7 +13,38 @@ class ThemeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(themeControllerProvider);
-    final selected = state.value ?? AppThemeVariant.pulseBlue;
+    final selected = state.value ?? AppThemeVariant.graphite;
+
+    void select(AppThemeVariant variant) {
+      unawaited(ref.read(themeControllerProvider.notifier).select(variant));
+    }
+
+    if (MediaQuery.sizeOf(context).width < 1100) {
+      return PopupMenuButton<AppThemeVariant>(
+        tooltip: 'Choose visual theme',
+        enabled: !state.isLoading,
+        initialValue: selected,
+        onSelected: select,
+        itemBuilder: (context) => AppThemeVariant.values
+            .map(
+              (variant) => PopupMenuItem(
+                value: variant,
+                child: Row(
+                  children: [
+                    Icon(_iconFor(variant)),
+                    const SizedBox(width: 10),
+                    Text(variant.label),
+                  ],
+                ),
+              ),
+            )
+            .toList(growable: false),
+        child: Chip(
+          avatar: Icon(_iconFor(selected), size: 18),
+          label: Text(selected.label),
+        ),
+      );
+    }
 
     return SegmentedButton<AppThemeVariant>(
       showSelectedIcon: false,
@@ -21,11 +52,7 @@ class ThemeSelector extends ConsumerWidget {
           .map(
             (variant) => ButtonSegment(
               value: variant,
-              icon: Icon(
-                variant == AppThemeVariant.pulseBlue
-                    ? Icons.bolt_rounded
-                    : Icons.auto_awesome_rounded,
-              ),
+              icon: Icon(_iconFor(variant)),
               label: Text(variant.label),
             ),
           )
@@ -33,13 +60,13 @@ class ThemeSelector extends ConsumerWidget {
       selected: {selected},
       onSelectionChanged: state.isLoading
           ? null
-          : (selection) {
-              unawaited(
-                ref
-                    .read(themeControllerProvider.notifier)
-                    .select(selection.single),
-              );
-            },
+          : (selection) => select(selection.single),
     );
   }
+
+  IconData _iconFor(AppThemeVariant variant) => switch (variant) {
+    AppThemeVariant.graphite => Icons.bolt_rounded,
+    AppThemeVariant.studioLilac => Icons.auto_awesome_rounded,
+    AppThemeVariant.cloudPop => Icons.cloud_rounded,
+  };
 }

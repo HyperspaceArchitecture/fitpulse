@@ -14,7 +14,7 @@ class FitPulseApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
     final selectedTheme =
-        ref.watch(themeControllerProvider).value ?? AppThemeVariant.pulseBlue;
+        ref.watch(themeControllerProvider).value ?? AppThemeVariant.graphite;
 
     return MaterialApp.router(
       title: 'FitPulse AI',

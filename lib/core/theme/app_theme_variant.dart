@@ -1,7 +1,8 @@
 /// The production visual systems available to FitPulse.
 enum AppThemeVariant {
-  pulseBlue('Volt Lime', 'Bold, graphic and high energy'),
-  studioLilac('Studio Lilac', 'Soft, expressive and editorial');
+  graphite('Graphite', 'Masculine, contemporary and focused'),
+  studioLilac('Studio', 'Soft, expressive and editorial'),
+  cloudPop('Cloud Pop', 'Calming, friendly and playful');
 
   const AppThemeVariant(this.label, this.description);
 

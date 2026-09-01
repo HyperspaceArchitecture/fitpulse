@@ -4,7 +4,7 @@ import 'package:fitpulse/core/theme/theme_preferences.dart';
 /// Deterministic theme persistence used by unit and widget tests.
 class InMemoryThemePreferences implements ThemePreferences {
   /// Creates memory-backed preferences with an optional initial theme.
-  InMemoryThemePreferences([this.value = AppThemeVariant.pulseBlue]);
+  InMemoryThemePreferences([this.value = AppThemeVariant.graphite]);
 
   /// Currently persisted theme.
   AppThemeVariant value;

@@ -70,8 +70,9 @@ abstract final class FitPulseTheme {
   /// Returns the premium editorial theme for [variant].
   static ThemeData forVariant(AppThemeVariant variant) {
     final palette = switch (variant) {
-      AppThemeVariant.pulseBlue => _pulseBlue,
+      AppThemeVariant.graphite => _graphite,
       AppThemeVariant.studioLilac => _studioLilac,
+      AppThemeVariant.cloudPop => _cloudPop,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
@@ -92,19 +93,21 @@ abstract final class FitPulseTheme {
     );
 
     return base.copyWith(
-      textTheme: _textTheme(base.textTheme),
+      textTheme: _textTheme(base.textTheme, friendly: palette.friendly),
       cardTheme: CardThemeData(
         color: palette.colors.panel,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(palette.friendly ? 30 : 24),
+        ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           foregroundColor: scheme.onPrimary,
           minimumSize: const Size(48, 54),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(palette.friendly ? 24 : 16),
           ),
           textStyle: const TextStyle(fontWeight: FontWeight.w700),
         ),
@@ -117,17 +120,17 @@ abstract final class FitPulseTheme {
           vertical: 18,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(palette.friendly ? 22 : 16),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(palette.friendly ? 22 : 16),
           borderSide: BorderSide(
             color: scheme.outlineVariant.withValues(alpha: 0.35),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(palette.friendly ? 22 : 16),
           borderSide: BorderSide(color: scheme.primary, width: 1.5),
         ),
       ),
@@ -135,7 +138,7 @@ abstract final class FitPulseTheme {
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(48, 52),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(palette.friendly ? 24 : 16),
           ),
           side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.6)),
           textStyle: const TextStyle(fontWeight: FontWeight.w700),
@@ -160,39 +163,40 @@ abstract final class FitPulseTheme {
     );
   }
 
-  static TextTheme _textTheme(TextTheme base) {
+  static TextTheme _textTheme(TextTheme base, {required bool friendly}) {
     return base.copyWith(
       displaySmall: base.displaySmall?.copyWith(
-        fontSize: 46,
-        height: 0.96,
-        fontWeight: FontWeight.w900,
-        letterSpacing: -2.2,
+        fontSize: friendly ? 42 : 46,
+        height: friendly ? 1.05 : 0.96,
+        fontWeight: friendly ? FontWeight.w800 : FontWeight.w900,
+        letterSpacing: friendly ? -1.1 : -2.2,
       ),
       headlineMedium: base.headlineMedium?.copyWith(
-        fontWeight: FontWeight.w900,
-        letterSpacing: -1.1,
+        fontWeight: friendly ? FontWeight.w800 : FontWeight.w900,
+        letterSpacing: friendly ? -0.5 : -1.1,
       ),
       titleLarge: base.titleLarge?.copyWith(
-        fontWeight: FontWeight.w900,
-        letterSpacing: -0.5,
+        fontWeight: friendly ? FontWeight.w800 : FontWeight.w900,
+        letterSpacing: friendly ? -0.2 : -0.5,
       ),
       bodyLarge: base.bodyLarge?.copyWith(height: 1.5),
       labelLarge: base.labelLarge?.copyWith(fontWeight: FontWeight.w700),
     );
   }
 
-  static const _pulseBlue = _ThemePalette(
-    brightness: Brightness.light,
-    primary: Color(0xFF91F313),
-    secondary: Color(0xFFFF8E93),
-    tertiary: Color(0xFF34C6D3),
+  static const _graphite = _ThemePalette(
+    brightness: Brightness.dark,
+    primary: Color(0xFF4D8DFF),
+    secondary: Color(0xFF55D6A5),
+    tertiary: Color(0xFFFFB35A),
+    friendly: false,
     colors: FitPulseColors(
-      background: Color(0xFFF0F0EE),
-      panel: Color(0xFFFFFFFF),
-      success: Color(0xFF35B86B),
-      warning: Color(0xFFFFBF45),
-      danger: Color(0xFFE74962),
-      glow: Color(0xFF91F313),
+      background: Color(0xFF111418),
+      panel: Color(0xFF1B2027),
+      success: Color(0xFF55D6A5),
+      warning: Color(0xFFFFB35A),
+      danger: Color(0xFFFF6577),
+      glow: Color(0xFF244F91),
     ),
   );
 
@@ -201,6 +205,7 @@ abstract final class FitPulseTheme {
     primary: Color(0xFFB69AE8),
     secondary: Color(0xFFF1C9D4),
     tertiary: Color(0xFFEF405F),
+    friendly: false,
     colors: FitPulseColors(
       background: Color(0xFFF1F0EF),
       panel: Color(0xFFFFFFFF),
@@ -208,6 +213,22 @@ abstract final class FitPulseTheme {
       warning: Color(0xFFE0A84A),
       danger: Color(0xFFEF405F),
       glow: Color(0xFFDCC8F5),
+    ),
+  );
+
+  static const _cloudPop = _ThemePalette(
+    brightness: Brightness.light,
+    primary: Color(0xFF76B7A3),
+    secondary: Color(0xFFF3B5A7),
+    tertiary: Color(0xFF88B5E4),
+    friendly: true,
+    colors: FitPulseColors(
+      background: Color(0xFFF3F7F4),
+      panel: Color(0xFFFFFFFF),
+      success: Color(0xFF76B7A3),
+      warning: Color(0xFFF3C96B),
+      danger: Color(0xFFE87878),
+      glow: Color(0xFFBFE2D8),
     ),
   );
 }
@@ -218,6 +239,7 @@ class _ThemePalette {
     required this.primary,
     required this.secondary,
     required this.tertiary,
+    required this.friendly,
     required this.colors,
   });
 
@@ -225,5 +247,6 @@ class _ThemePalette {
   final Color primary;
   final Color secondary;
   final Color tertiary;
+  final bool friendly;
   final FitPulseColors colors;
 }
