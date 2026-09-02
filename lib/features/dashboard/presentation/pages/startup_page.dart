@@ -43,6 +43,7 @@ class _StartupPageState extends ConsumerState<StartupPage> {
     final yesterdayGain = (score - previousScore) / previousScore * 100;
     final weeklyGain = (score - firstScore) / firstScore * 100;
     final lift = latestWorkout?.momentumLift ?? 0;
+    final memberName = profile?.displayName.trim();
     final colors = Theme.of(context).extension<FitPulseColors>()!;
 
     return Scaffold(
@@ -76,7 +77,19 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                             child: MemberAvatar(profile: profile),
                           ),
                         ),
-                        SizedBox(height: phone ? 18 : 28),
+                        SizedBox(height: phone ? 16 : 24),
+                        Text(
+                          memberName == null || memberName.isEmpty
+                              ? 'WELCOME'
+                              : memberName.toUpperCase(),
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1.4,
+                              ),
+                        ),
+                        SizedBox(height: phone ? 10 : 14),
                         GestureDetector(
                           onTap: () => setState(
                             () => _quoteIndex =

@@ -19,7 +19,7 @@ application built with Flutter and Material 3.
 
 ## Available screens
 
-- `/` — quiet startup with avatar, rotating quote, growth line, and workout momentum needle
+- `/` — quiet startup with avatar, member name, rotating quote, growth line, and workout momentum needle
 - `/welcome` — premium product introduction and authentication entry
 - `/sign-in` — validated sign-in presentation
 - `/register` — account-creation presentation with consent state

@@ -47,6 +47,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(find.text('SAM'), findsOneWidget);
+
     GoRouter.of(tester.element(find.byType(Scaffold))).go('/dashboard');
     await tester.pumpAndSettle();
 
