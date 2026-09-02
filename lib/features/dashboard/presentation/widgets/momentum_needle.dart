@@ -34,9 +34,10 @@ class MomentumNeedle extends StatelessWidget {
             child: CustomPaint(
               painter: _NeedlePainter(
                 value: animatedValue,
+                lift: lift,
                 track: Theme.of(context).colorScheme.surfaceContainerHighest,
                 active: colors.success,
-                needle: Theme.of(context).colorScheme.onSurface,
+                marker: Theme.of(context).colorScheme.onSurface,
               ),
               child: Align(
                 alignment: const Alignment(0, 0.55),
@@ -55,9 +56,9 @@ class MomentumNeedle extends StatelessWidget {
                 ? '+${lift.toStringAsFixed(1)} momentum from your workout'
                 : 'Your next workout will move the needle',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: lift > 0 ? colors.success : null,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -69,15 +70,17 @@ class MomentumNeedle extends StatelessWidget {
 class _NeedlePainter extends CustomPainter {
   const _NeedlePainter({
     required this.value,
+    required this.lift,
     required this.track,
     required this.active,
-    required this.needle,
+    required this.marker,
   });
 
   final double value;
+  final double lift;
   final Color track;
   final Color active;
-  final Color needle;
+  final Color marker;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -90,12 +93,12 @@ class _NeedlePainter extends CustomPainter {
       ..color = track
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = size.width * 0.065;
+      ..strokeWidth = size.width * 0.035;
     final activePaint = Paint()
       ..color = active
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = size.width * 0.065;
+      ..strokeWidth = size.width * 0.035;
     canvas.drawArc(rect, start, sweep, false, trackPaint);
     canvas.drawArc(
       rect,
@@ -105,26 +108,40 @@ class _NeedlePainter extends CustomPainter {
       activePaint,
     );
 
-    final angle = start + sweep * value.clamp(0, 100) / 100;
-    final end = Offset(
-      center.dx + math.cos(angle) * radius * 0.68,
-      center.dy + math.sin(angle) * radius * 0.68,
+    final currentAngle = start + sweep * value.clamp(0, 100) / 100;
+    final currentPoint = Offset(
+      center.dx + math.cos(currentAngle) * radius,
+      center.dy + math.sin(currentAngle) * radius,
     );
-    canvas.drawLine(
-      center,
-      end,
-      Paint()
-        ..color = needle
-        ..strokeWidth = size.width * 0.025
-        ..strokeCap = StrokeCap.round,
+    if (lift > 0) {
+      final previousAngle = start + sweep * (value - lift).clamp(0, 100) / 100;
+      final previousPoint = Offset(
+        center.dx + math.cos(previousAngle) * radius,
+        center.dy + math.sin(previousAngle) * radius,
+      );
+      canvas.drawCircle(
+        previousPoint,
+        size.width * 0.018,
+        Paint()..color = marker.withValues(alpha: 0.35),
+      );
+    }
+    canvas.drawCircle(
+      currentPoint,
+      size.width * 0.032,
+      Paint()..color = marker,
     );
-    canvas.drawCircle(center, size.width * 0.045, Paint()..color = needle);
+    canvas.drawCircle(
+      currentPoint,
+      size.width * 0.014,
+      Paint()..color = active,
+    );
   }
 
   @override
   bool shouldRepaint(_NeedlePainter oldDelegate) =>
       value != oldDelegate.value ||
+      lift != oldDelegate.lift ||
       track != oldDelegate.track ||
       active != oldDelegate.active ||
-      needle != oldDelegate.needle;
+      marker != oldDelegate.marker;
 }

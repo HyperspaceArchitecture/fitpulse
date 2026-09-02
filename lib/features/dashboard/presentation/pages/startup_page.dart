@@ -96,7 +96,11 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                                           : Theme.of(context)
                                                 .textTheme
                                                 .displaySmall)
-                                      ?.copyWith(fontWeight: FontWeight.w900),
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.16,
+                                        letterSpacing: -0.4,
+                                      ),
                             ),
                           ),
                         ),
@@ -198,8 +202,8 @@ class _ImprovementPulseState extends State<_ImprovementPulse>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<FitPulseColors>()!;
     final badge = Container(
-      width: widget.compact ? 88 : 118,
-      height: widget.compact ? 88 : 118,
+      width: widget.compact ? 100 : 126,
+      height: widget.compact ? 100 : 126,
       padding: EdgeInsets.all(widget.compact ? 8 : 12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -214,7 +218,7 @@ class _ImprovementPulseState extends State<_ImprovementPulse>
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: SizedBox(
-          width: widget.compact ? 72 : 94,
+          width: widget.compact ? 82 : 98,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -245,7 +249,7 @@ class _GainLine extends StatelessWidget {
         Text(
           '${value >= 0 ? '+' : ''}${value.toStringAsFixed(2)}%',
           style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: success, fontWeight: FontWeight.w900),
+              ?.copyWith(color: success, fontWeight: FontWeight.w700),
         ),
         Text(
           label,
