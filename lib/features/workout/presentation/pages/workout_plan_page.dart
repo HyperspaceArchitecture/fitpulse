@@ -3,6 +3,7 @@ import 'package:fitpulse/core/theme/app_theme.dart';
 import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
 import 'package:fitpulse/features/workout/application/workout_engine_controller.dart';
 import 'package:fitpulse/features/workout/domain/workout_plan.dart';
+import 'package:fitpulse/features/workout/presentation/widgets/exercise_motion_card.dart';
 import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
 import 'package:flutter/material.dart';
@@ -160,6 +161,7 @@ class _ExerciseTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
               backgroundColor: Theme.of(context).colorScheme.primary,
@@ -171,24 +173,32 @@ class _ExerciseTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    exercise.name,
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          exercise.name,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      Text(
+                        '${exercise.sets} × ${exercise.reps}',
+                        textAlign: TextAlign.end,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 3),
                   Text(
                     exercise.focus,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                  const SizedBox(height: 12),
+                  ExerciseMotionCard(exercise: exercise, compact: true),
                 ],
               ),
             ),
             const SizedBox(width: 12),
-            Text(
-              '${exercise.sets} × ${exercise.reps}',
-              textAlign: TextAlign.end,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
           ],
         ),
       ),

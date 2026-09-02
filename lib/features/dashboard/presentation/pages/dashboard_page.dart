@@ -1,9 +1,13 @@
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
 import 'package:fitpulse/features/dashboard/data/dashboard_preview_data.dart';
+import 'package:fitpulse/features/dashboard/data/motivational_quotes.dart';
 import 'package:fitpulse/features/dashboard/domain/daily_plan.dart';
 import 'package:fitpulse/features/onboarding/application/profile_controller.dart';
 import 'package:fitpulse/features/onboarding/domain/fitness_profile.dart';
+import 'package:fitpulse/features/progress/data/progress_preview_data.dart';
+import 'package:fitpulse/features/progress/domain/wellness_score.dart';
+import 'package:fitpulse/features/progress/presentation/widgets/simple_growth_chart.dart';
 import 'package:fitpulse/features/theme_preview/presentation/widgets/readiness_ring.dart';
 import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
 import 'package:fitpulse/shared/widgets/brand_mark.dart';
@@ -42,6 +46,8 @@ class DashboardPage extends ConsumerWidget {
                     children: [
                       _DashboardHeader(profile: profile),
                       const SizedBox(height: 38),
+                      _MotivationHome(profile: profile),
+                      const SizedBox(height: 24),
                       _DashboardIntro(profile: profile, plan: plan),
                       const SizedBox(height: 24),
                       _MainGrid(plan: plan),
@@ -55,6 +61,156 @@ class DashboardPage extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MotivationHome extends StatefulWidget {
+  const _MotivationHome({required this.profile});
+
+  final FitnessProfile? profile;
+
+  @override
+  State<_MotivationHome> createState() => _MotivationHomeState();
+}
+
+class _MotivationHomeState extends State<_MotivationHome> {
+  late int _quoteIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _quoteIndex = DateTime.now().day % MotivationalQuotes.values.length;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final metrics = ProgressPreviewData.recentWeek;
+    final current = WellnessScore.calculate(metrics.last);
+    final previous = WellnessScore.calculate(metrics[metrics.length - 2]);
+    final first = WellnessScore.calculate(metrics.first);
+    final todayGrowth = (current - previous) / previous * 100;
+    final weekGrowth = (current - first) / first * 100;
+    final name = widget.profile?.displayName;
+    final initial = name?.trim().isNotEmpty == true
+        ? name!.trim().characters.first.toUpperCase()
+        : null;
+
+    return GlassPanel(
+      padding: const EdgeInsets.all(28),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final identity = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 46,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                child: initial == null
+                    ? const Icon(Icons.person_rounded, size: 46)
+                    : Text(
+                        initial,
+                        style: Theme.of(context).textTheme.displaySmall
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                      ),
+              ),
+              const SizedBox(height: 18),
+              Text(
+                name == null ? 'Your momentum' : '$name’s momentum',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 12),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 350),
+                child: Text(
+                  MotivationalQuotes.values[_quoteIndex],
+                  key: ValueKey(_quoteIndex),
+                  style: Theme.of(context).textTheme.headlineMedium
+                      ?.copyWith(fontWeight: FontWeight.w800, height: 1.08),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextButton.icon(
+                onPressed: () => setState(
+                  () => _quoteIndex =
+                      (_quoteIndex + 1) % MotivationalQuotes.values.length,
+                ),
+                icon: const Icon(Icons.refresh_rounded),
+                label: const Text('Another thought'),
+              ),
+            ],
+          );
+
+          final progress = Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Wrap(
+                spacing: 18,
+                runSpacing: 8,
+                children: [
+                  _GrowthLabel(value: todayGrowth, period: 'better today'),
+                  _GrowthLabel(value: weekGrowth, period: 'better this week'),
+                ],
+              ),
+              const SizedBox(height: 8),
+              SimpleGrowthChart(metrics: metrics),
+              const SizedBox(height: 4),
+              Text(
+                'One line combines exercise, sleep, and nutrition. Weight remains separate and never decides your score.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 12),
+              FilledButton.tonalIcon(
+                onPressed: () => context.go(AppRoutes.progress),
+                icon: const Icon(Icons.tune_rounded),
+                label: const Text('See the details'),
+              ),
+            ],
+          );
+
+          if (constraints.maxWidth < 780) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [identity, const SizedBox(height: 28), progress],
+            );
+          }
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 4, child: identity),
+              const SizedBox(width: 36),
+              Expanded(flex: 6, child: progress),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _GrowthLabel extends StatelessWidget {
+  const _GrowthLabel({required this.value, required this.period});
+
+  final double value;
+  final String period;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<FitPulseColors>()!;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.trending_up_rounded, color: colors.success),
+        const SizedBox(width: 6),
+        Text(
+          '${value >= 0 ? '+' : ''}${value.toStringAsFixed(2)}% $period',
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(color: colors.success, fontWeight: FontWeight.w800),
+        ),
+      ],
     );
   }
 }
@@ -304,6 +460,12 @@ class _SignalsCard extends StatelessWidget {
             onPressed: () => context.go(AppRoutes.progress),
             icon: const Icon(Icons.show_chart_rounded),
             label: const Text('View all progress'),
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: () => context.go(AppRoutes.nutrition),
+            icon: const Icon(Icons.restaurant_menu_rounded),
+            label: const Text('Open nutrition journal'),
           ),
         ],
       ),

@@ -18,6 +18,9 @@ abstract final class WorkoutCatalog {
         reps: '8–10 reps',
         restSeconds: 60,
         coachingCue: 'Keep your ribs stacked and drive the floor away.',
+        illustrationAsset: 'assets/images/exercises/goblet-squat.png',
+        videoUrl: 'https://www.youtube.com/watch?v=nfX7IFK9UNI',
+        videoSource: 'NASM',
       ),
       WorkoutExercise(
         id: 'incline_push_up',
@@ -27,6 +30,9 @@ abstract final class WorkoutCatalog {
         reps: '8–12 reps',
         restSeconds: 60,
         coachingCue: 'Move as one strong line; finish with long arms.',
+        illustrationAsset: 'assets/images/exercises/incline-push-up.png',
+        videoUrl: 'https://www.youtube.com/watch?v=0JUrOH--Kdk',
+        videoSource: 'NASM',
       ),
       WorkoutExercise(
         id: 'split_stance_row',
@@ -36,6 +42,9 @@ abstract final class WorkoutCatalog {
         reps: '10 each side',
         restSeconds: 60,
         coachingCue: 'Pull your elbow toward your back pocket.',
+        illustrationAsset: 'assets/images/exercises/split-stance-row.png',
+        videoUrl: 'https://www.youtube.com/watch?v=TaHaD1tx9BI',
+        videoSource: 'White Coat Trainer',
       ),
       WorkoutExercise(
         id: 'romanian_deadlift',
@@ -45,6 +54,9 @@ abstract final class WorkoutCatalog {
         reps: '8–10 reps',
         restSeconds: 75,
         coachingCue: 'Send the hips back and keep the weight close.',
+        illustrationAsset: 'assets/images/exercises/romanian-deadlift.png',
+        videoUrl: 'https://www.youtube.com/watch?v=xgusDooVfKU',
+        videoSource: 'NASM',
       ),
       WorkoutExercise(
         id: 'dead_bug',
@@ -54,6 +66,9 @@ abstract final class WorkoutCatalog {
         reps: '6 each side',
         restSeconds: 45,
         coachingCue: 'Exhale fully and keep your lower back quiet.',
+        illustrationAsset: 'assets/images/exercises/dead-bug.png',
+        videoUrl: 'https://www.youtube.com/results?search_query=Sports+Lab+Rehab+Exercises+Dead+Bug',
+        videoSource: 'Sports Lab Physiotherapy',
       ),
       WorkoutExercise(
         id: 'hip_flexor_flow',
@@ -63,6 +78,9 @@ abstract final class WorkoutCatalog {
         reps: '45 sec each side',
         restSeconds: 30,
         coachingCue: 'Stay tall and breathe into the stretch.',
+        illustrationAsset: 'assets/images/exercises/hip-flexor-flow.png',
+        videoUrl: 'https://www.youtube.com/watch?v=cUPep8vsKyo',
+        videoSource: 'East Cheshire NHS Trust',
       ),
     ],
   );

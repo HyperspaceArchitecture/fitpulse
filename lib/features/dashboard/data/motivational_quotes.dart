@@ -1,0 +1,36 @@
+/// Thirty concise prompts rotated on the member home screen.
+abstract final class MotivationalQuotes {
+  /// Supportive prompts that encourage agency without shame or pressure.
+  static const values = <String>[
+    'The question isn’t whether you can. It’s whether you will.',
+    'A small promise kept today becomes confidence tomorrow.',
+    'You do not need perfect conditions. You need one honest step.',
+    'Strength is built each time you choose to begin again.',
+    'Your future self is shaped by what you repeat, not what you intend.',
+    'Momentum starts smaller than motivation expects.',
+    'Train for the life you want to keep living.',
+    'One deliberate choice can change the direction of a day.',
+    'Consistency is courage in ordinary clothes.',
+    'You are allowed to grow at a pace you can sustain.',
+    'Show up with what you have. That is enough to move forward.',
+    'The work counts even when nobody sees it.',
+    'Progress often feels quiet before it becomes visible.',
+    'Do the next useful thing, then let that be enough.',
+    'Your body is a partner to train, not a problem to punish.',
+    'A rested step forward is still a step forward.',
+    'Today’s effort does not need to look like yesterday’s.',
+    'Build a routine your real life can hold.',
+    'Confidence follows evidence. Give yourself one more example.',
+    'Better is built in moments, not announced in milestones.',
+    'Choose the action that makes tomorrow feel possible.',
+    'You can be ambitious and kind to yourself at the same time.',
+    'The strongest plan is the one you can return to.',
+    'Notice what improved before judging what remains.',
+    'Your pace is valid when it keeps you moving.',
+    'Recovery is part of the work, not a break from it.',
+    'Begin where you are. Use what you know. Adjust as you learn.',
+    'Keep the promise small enough to keep—and keep it.',
+    'You are not behind. You are in the middle of becoming.',
+    'Will you give today the chance to surprise you?',
+  ];
+}

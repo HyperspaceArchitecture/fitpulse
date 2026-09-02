@@ -9,6 +9,9 @@ class WorkoutExercise {
     required this.reps,
     required this.restSeconds,
     required this.coachingCue,
+    required this.illustrationAsset,
+    required this.videoUrl,
+    required this.videoSource,
   });
 
   /// Stable identifier used by logs and future content updates.
@@ -31,6 +34,15 @@ class WorkoutExercise {
 
   /// Short technique cue shown during the set.
   final String coachingCue;
+
+  /// Bundled two-phase motion illustration available offline.
+  final String illustrationAsset;
+
+  /// Selected external technique demonstration.
+  final String videoUrl;
+
+  /// Publisher displayed before the member opens the external video.
+  final String videoSource;
 }
 
 /// Ordered exercise plan that can be executed by the workout engine.

@@ -1,5 +1,6 @@
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/features/workout/application/workout_engine_controller.dart';
+import 'package:fitpulse/features/workout/presentation/widgets/exercise_motion_card.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,6 +98,8 @@ class WorkoutSessionPage extends ConsumerWidget {
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                         ),
+                        const SizedBox(height: 22),
+                        ExerciseMotionCard(exercise: exercise),
                         const SizedBox(height: 24),
                         _SetMarkers(
                           total: exercise.sets,

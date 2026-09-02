@@ -4,6 +4,7 @@ import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:fitpulse/features/coach/presentation/pages/coach_page.dart';
 import 'package:fitpulse/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
+import 'package:fitpulse/features/nutrition/presentation/pages/nutrition_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
 import 'package:fitpulse/features/theme_preview/presentation/pages/theme_preview_page.dart';
@@ -47,6 +48,9 @@ abstract final class AppRoutes {
 
   /// Privacy-first coaching conversation.
   static const coach = '/coach';
+
+  /// Offline nutrition and hydration journal.
+  static const nutrition = '/nutrition';
 }
 
 /// Owns the router and disposes it with the provider container.
@@ -96,6 +100,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.coach,
         builder: (context, state) => const CoachPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.nutrition,
+        builder: (context, state) => const NutritionPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
