@@ -15,6 +15,7 @@ void main() {
       targetWeightKg: 74,
       sleepHours: 7.5,
       completedAt: DateTime.utc(2026, 9, 2),
+      avatarId: 4,
     );
 
     final restored = FitnessProfile.fromJson(profile.toJson());
@@ -25,5 +26,6 @@ void main() {
     expect(restored.equipment, containsAll(profile.equipment));
     expect(restored.currentWeightKg, 78.4);
     expect(restored.completedAt, DateTime.utc(2026, 9, 2));
+    expect(restored.avatarId, 4);
   });
 }

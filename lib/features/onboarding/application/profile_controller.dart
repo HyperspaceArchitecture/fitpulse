@@ -21,6 +21,12 @@ class ProfileController extends AsyncNotifier<FitnessProfile?> {
       Error.throwWithStackTrace(error, stackTrace);
     }
   }
+
+  /// Deletes the locally stored member profile.
+  Future<void> clear() async {
+    await ref.read(profileRepositoryProvider).clear();
+    state = const AsyncData(null);
+  }
 }
 
 /// Exposes the persisted profile across onboarding and dashboard features.

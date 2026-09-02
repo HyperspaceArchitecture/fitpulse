@@ -29,4 +29,24 @@ class WellnessMetric {
 
   /// Scale weight in kilograms, charted independently from wellness scores.
   final double weightKg;
+
+  /// Serializes this measurement for local storage.
+  Map<String, Object> toJson() => {
+    'date': date.toIso8601String(),
+    'exercise': exercise,
+    'sleep': sleep,
+    'nutrition': nutrition,
+    'weightKg': weightKg,
+  };
+
+  /// Restores a locally persisted measurement.
+  factory WellnessMetric.fromJson(Map<String, Object?> json) {
+    return WellnessMetric(
+      date: DateTime.parse(json['date'] as String),
+      exercise: (json['exercise'] as num).toDouble(),
+      sleep: (json['sleep'] as num).toDouble(),
+      nutrition: (json['nutrition'] as num).toDouble(),
+      weightKg: (json['weightKg'] as num).toDouble(),
+    );
+  }
 }

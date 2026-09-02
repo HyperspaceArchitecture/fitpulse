@@ -1,5 +1,6 @@
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
+import 'package:fitpulse/features/progress/application/progress_controller.dart';
 import 'package:fitpulse/features/progress/data/progress_preview_data.dart';
 import 'package:fitpulse/features/progress/domain/wellness_metric.dart';
 import 'package:fitpulse/features/progress/domain/wellness_score.dart';
@@ -8,16 +9,19 @@ import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selec
 import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// Holistic progress screen that balances scale and non-scale outcomes.
-class ProgressPage extends StatelessWidget {
+class ProgressPage extends ConsumerWidget {
   /// Creates the progress screen.
   const ProgressPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final metrics = ProgressPreviewData.recentWeek;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final metrics =
+        ref.watch(progressControllerProvider).value ??
+        ProgressPreviewData.recentWeek;
     final colors = Theme.of(context).extension<FitPulseColors>()!;
     return Scaffold(
       body: Stack(
@@ -70,6 +74,121 @@ class ProgressPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showCheckIn(context, ref, metrics.last),
+        icon: const Icon(Icons.add_chart_rounded),
+        label: const Text('Log today'),
+      ),
+    );
+  }
+
+  Future<void> _showCheckIn(
+    BuildContext context,
+    WidgetRef ref,
+    WellnessMetric latest,
+  ) async {
+    var exercise = latest.exercise;
+    var sleep = latest.sleep;
+    var nutrition = latest.nutrition;
+    var weight = latest.weightKg;
+    final metric = await showDialog<WellnessMetric>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Today’s check-in'),
+          content: SizedBox(
+            width: 480,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _ScoreSlider(
+                    label: 'Exercise quality',
+                    value: exercise,
+                    onChanged: (value) => setState(() => exercise = value),
+                  ),
+                  _ScoreSlider(
+                    label: 'Sleep and recovery',
+                    value: sleep,
+                    onChanged: (value) => setState(() => sleep = value),
+                  ),
+                  _ScoreSlider(
+                    label: 'Nutrition balance',
+                    value: nutrition,
+                    onChanged: (value) => setState(() => nutrition = value),
+                  ),
+                  _ScoreSlider(
+                    label: 'Weight ${weight.toStringAsFixed(1)} kg',
+                    value: weight,
+                    minimum: 30,
+                    maximum: 200,
+                    onChanged: (value) => setState(() => weight = value),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Weight is recorded separately and never lowers your overall wellness score.',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(
+                context,
+                WellnessMetric(
+                  date: DateTime.now(),
+                  exercise: exercise,
+                  sleep: sleep,
+                  nutrition: nutrition,
+                  weightKg: weight,
+                ),
+              ),
+              child: const Text('Save check-in'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (metric != null) {
+      await ref.read(progressControllerProvider.notifier).save(metric);
+    }
+  }
+}
+
+class _ScoreSlider extends StatelessWidget {
+  const _ScoreSlider({
+    required this.label,
+    required this.value,
+    required this.onChanged,
+    this.minimum = 0,
+    this.maximum = 100,
+  });
+
+  final String label;
+  final double value;
+  final ValueChanged<double> onChanged;
+  final double minimum;
+  final double maximum;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('$label · ${value.round()}'),
+        Slider(
+          value: value.clamp(minimum, maximum),
+          min: minimum,
+          max: maximum,
+          divisions: (maximum - minimum).round(),
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

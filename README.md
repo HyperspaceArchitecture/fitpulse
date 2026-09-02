@@ -12,7 +12,9 @@ application built with Flutter and Material 3.
 - Material 3 design tokens and reusable glass surfaces
 - Persisted Graphite, Studio Lilac, and Soft Arcade visual systems
 - Responsive layouts for phones, tablets, foldables, web, and desktop
-- Backend-agnostic boundaries; no backend SDK is currently installed
+- Backend-agnostic repository and service boundaries; no Firebase dependency
+- Offline persistence for profile, appearance, workouts, nutrition, and progress
+- Deny-by-default production admin access
 
 ## Available screens
 
@@ -23,13 +25,18 @@ application built with Flutter and Material 3.
 - `/onboarding` — offline-first fitness profile setup
 - `/dashboard` — personalized daily training and recovery command centre
 - `/workouts` — structured workout plan and movement prescription
-- `/workouts/session` — live set, rest timer, cue, and completion engine
+- `/workouts/session` — live set, rest timer, illustrated form guidance, and completion engine
 - `/coach` — private offline coaching conversation and safety fallback
+- `/nutrition` — food, protein, fibre, energy, and hydration journal
 - `/today` — interactive daily-readiness preview
-- `/progress` — combined exercise, sleep, nutrition, weight, and non-scale trends
+- `/progress` — saved check-ins plus detailed exercise, sleep, nutrition, weight, and non-scale trends
+- `/settings` — avatar selection and local privacy controls
+- `/admin` — debug operations preview; production access is denied until server roles exist
 
-Authentication screens are intentionally marked as previews until a backend is
-selected. They validate locally and never transmit credentials.
+Authentication screens are intentionally marked as previews until a non-Firebase
+backend is selected. They validate locally and never transmit credentials. The
+admin route is not client-unlockable in release builds: a future trusted server
+must verify its role claim.
 
 ## Project structure
 
@@ -39,7 +46,12 @@ lib/
 │   ├── routing/       # Application navigation
 │   └── theme/         # Design tokens, themes, and appearance state
 ├── features/
-│   └── theme_preview/ # Feature-scoped presentation code
+│   ├── admin/         # Production-safe admin shell
+│   ├── coach/         # Offline coaching service and conversation
+│   ├── nutrition/     # Daily nutrition persistence and UI
+│   ├── progress/      # Combined and detailed progress tracking
+│   ├── settings/      # Avatar and privacy controls
+│   └── workout/       # Plans, history, engine, and exercise media
 ├── shared/
 │   └── widgets/       # Reusable cross-feature components
 ├── app.dart           # Application composition root
@@ -59,4 +71,12 @@ flutter run
 ```
 
 The selected visual system is stored locally and restored at launch. Use the
-theme selector on the foundation screen to review Graphite, Studio Lilac, and Soft Arcade.
+theme selector to review Graphite, Studio Lilac, and Soft Arcade.
+
+## Release boundary
+
+The repository is a complete offline-first product slice. Cross-device accounts,
+server-side AI, subscriptions, push delivery, analytics, and administrator role
+claims require a separately selected backend. They are deliberately not faked
+in client code. Repository and service interfaces isolate those integrations so
+they can be added without replacing the feature UI.

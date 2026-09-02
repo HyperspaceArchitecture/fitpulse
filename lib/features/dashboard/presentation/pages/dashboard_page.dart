@@ -5,6 +5,7 @@ import 'package:fitpulse/features/dashboard/data/motivational_quotes.dart';
 import 'package:fitpulse/features/dashboard/domain/daily_plan.dart';
 import 'package:fitpulse/features/onboarding/application/profile_controller.dart';
 import 'package:fitpulse/features/onboarding/domain/fitness_profile.dart';
+import 'package:fitpulse/features/progress/application/progress_controller.dart';
 import 'package:fitpulse/features/progress/data/progress_preview_data.dart';
 import 'package:fitpulse/features/progress/domain/wellness_score.dart';
 import 'package:fitpulse/features/progress/presentation/widgets/simple_growth_chart.dart';
@@ -12,6 +13,7 @@ import 'package:fitpulse/features/theme_preview/presentation/widgets/readiness_r
 import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
 import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
+import 'package:fitpulse/shared/widgets/member_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -65,16 +67,16 @@ class DashboardPage extends ConsumerWidget {
   }
 }
 
-class _MotivationHome extends StatefulWidget {
+class _MotivationHome extends ConsumerStatefulWidget {
   const _MotivationHome({required this.profile});
 
   final FitnessProfile? profile;
 
   @override
-  State<_MotivationHome> createState() => _MotivationHomeState();
+  ConsumerState<_MotivationHome> createState() => _MotivationHomeState();
 }
 
-class _MotivationHomeState extends State<_MotivationHome> {
+class _MotivationHomeState extends ConsumerState<_MotivationHome> {
   late int _quoteIndex;
 
   @override
@@ -85,16 +87,15 @@ class _MotivationHomeState extends State<_MotivationHome> {
 
   @override
   Widget build(BuildContext context) {
-    final metrics = ProgressPreviewData.recentWeek;
+    final metrics =
+        ref.watch(progressControllerProvider).value ??
+        ProgressPreviewData.recentWeek;
     final current = WellnessScore.calculate(metrics.last);
     final previous = WellnessScore.calculate(metrics[metrics.length - 2]);
     final first = WellnessScore.calculate(metrics.first);
     final todayGrowth = (current - previous) / previous * 100;
     final weekGrowth = (current - first) / first * 100;
     final name = widget.profile?.displayName;
-    final initial = name?.trim().isNotEmpty == true
-        ? name!.trim().characters.first.toUpperCase()
-        : null;
 
     return GlassPanel(
       padding: const EdgeInsets.all(28),
@@ -103,20 +104,7 @@ class _MotivationHomeState extends State<_MotivationHome> {
           final identity = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 46,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                child: initial == null
-                    ? const Icon(Icons.person_rounded, size: 46)
-                    : Text(
-                        initial,
-                        style: Theme.of(context).textTheme.displaySmall
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                      ),
-              ),
+              MemberAvatar(profile: widget.profile),
               const SizedBox(height: 18),
               Text(
                 name == null ? 'Your momentum' : '$name’s momentum',
@@ -239,6 +227,12 @@ class _DashboardHeader extends StatelessWidget {
             icon: const Icon(Icons.person_outline_rounded),
           ),
         if (profile != null) const SizedBox(width: 10),
+        IconButton.filledTonal(
+          tooltip: 'Settings and privacy',
+          onPressed: () => context.go(AppRoutes.settings),
+          icon: const Icon(Icons.settings_outlined),
+        ),
+        const SizedBox(width: 10),
         const ThemeSelector(),
       ],
     );

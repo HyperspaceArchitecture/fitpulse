@@ -1,3 +1,4 @@
+import 'package:fitpulse/features/admin/presentation/pages/admin_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
@@ -7,6 +8,7 @@ import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
 import 'package:fitpulse/features/nutrition/presentation/pages/nutrition_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:fitpulse/features/progress/presentation/pages/progress_page.dart';
+import 'package:fitpulse/features/settings/presentation/pages/settings_page.dart';
 import 'package:fitpulse/features/theme_preview/presentation/pages/theme_preview_page.dart';
 import 'package:fitpulse/features/workout/presentation/pages/workout_plan_page.dart';
 import 'package:fitpulse/features/workout/presentation/pages/workout_session_page.dart';
@@ -51,6 +53,12 @@ abstract final class AppRoutes {
 
   /// Offline nutrition and hydration journal.
   static const nutrition = '/nutrition';
+
+  /// Local member preferences and privacy controls.
+  static const settings = '/settings';
+
+  /// Administrator portal with deny-by-default production access.
+  static const admin = '/admin';
 }
 
 /// Owns the router and disposes it with the provider container.
@@ -104,6 +112,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.nutrition,
         builder: (context, state) => const NutritionPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.admin,
+        builder: (context, state) => const AdminPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

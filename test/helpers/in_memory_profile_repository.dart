@@ -16,4 +16,9 @@ class InMemoryProfileRepository implements ProfileRepository {
   Future<void> save(FitnessProfile profile) async {
     value = profile;
   }
+
+  @override
+  Future<void> clear() async {
+    value = null;
+  }
 }

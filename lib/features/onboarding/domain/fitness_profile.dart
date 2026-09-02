@@ -54,6 +54,7 @@ class FitnessProfile {
     required this.targetWeightKg,
     required this.sleepHours,
     required this.completedAt,
+    this.avatarId = 0,
   }) : assert(trainingDaysPerWeek >= 1 && trainingDaysPerWeek <= 7),
        assert(sessionMinutes >= 10),
        assert(heightCm >= 100 && heightCm <= 250),
@@ -93,6 +94,27 @@ class FitnessProfile {
   /// Timestamp used for schema migration and freshness checks.
   final DateTime completedAt;
 
+  /// Selected local avatar style identifier.
+  final int avatarId;
+
+  /// Returns a copy with selected personal presentation values replaced.
+  FitnessProfile copyWith({String? displayName, int? avatarId}) {
+    return FitnessProfile(
+      displayName: displayName ?? this.displayName,
+      goal: goal,
+      experience: experience,
+      trainingDaysPerWeek: trainingDaysPerWeek,
+      sessionMinutes: sessionMinutes,
+      equipment: equipment,
+      heightCm: heightCm,
+      currentWeightKg: currentWeightKg,
+      targetWeightKg: targetWeightKg,
+      sleepHours: sleepHours,
+      completedAt: completedAt,
+      avatarId: avatarId ?? this.avatarId,
+    );
+  }
+
   /// Serializes the profile for the local persistence boundary.
   Map<String, Object?> toJson() => {
     'displayName': displayName,
@@ -106,6 +128,7 @@ class FitnessProfile {
     'targetWeightKg': targetWeightKg,
     'sleepHours': sleepHours,
     'completedAt': completedAt.toIso8601String(),
+    'avatarId': avatarId,
   };
 
   /// Restores a profile from trusted local JSON data.
@@ -131,6 +154,7 @@ class FitnessProfile {
       targetWeightKg: (json['targetWeightKg'] as num?)?.toDouble(),
       sleepHours: (json['sleepHours'] as num).toDouble(),
       completedAt: DateTime.parse(json['completedAt'] as String),
+      avatarId: json['avatarId'] as int? ?? 0,
     );
   }
 }

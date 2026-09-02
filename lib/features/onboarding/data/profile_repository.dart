@@ -11,6 +11,9 @@ abstract interface class ProfileRepository {
 
   /// Replaces the current profile with [profile].
   Future<void> save(FitnessProfile profile);
+
+  /// Removes the locally stored profile.
+  Future<void> clear();
 }
 
 /// Stores non-sensitive profile data in platform preferences.
@@ -38,6 +41,9 @@ class SharedPreferencesProfileRepository implements ProfileRepository {
   Future<void> save(FitnessProfile profile) {
     return _preferences.setString(_key, jsonEncode(profile.toJson()));
   }
+
+  @override
+  Future<void> clear() => _preferences.remove(_key);
 }
 
 /// Provides the production local profile persistence implementation.
