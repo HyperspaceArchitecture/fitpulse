@@ -215,6 +215,12 @@ class _DashboardHeader extends StatelessWidget {
         const BrandMark(),
         const Spacer(),
         IconButton.filledTonal(
+          tooltip: 'Product overview',
+          onPressed: () => context.go(AppRoutes.welcome),
+          icon: const Icon(Icons.info_outline_rounded),
+        ),
+        const SizedBox(width: 10),
+        IconButton.filledTonal(
           tooltip: 'Open AI Coach',
           onPressed: () => context.go(AppRoutes.coach),
           icon: const Icon(Icons.auto_awesome_rounded),

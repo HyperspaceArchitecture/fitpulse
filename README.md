@@ -18,7 +18,8 @@ application built with Flutter and Material 3.
 
 ## Available screens
 
-- `/` — premium landing experience
+- `/` — motivational member startup with avatar, quote, and simple growth line
+- `/welcome` — premium product introduction and authentication entry
 - `/sign-in` — validated sign-in presentation
 - `/register` — account-creation presentation with consent state
 - `/forgot-password` — password-recovery presentation
@@ -27,7 +28,7 @@ application built with Flutter and Material 3.
 - `/workouts` — structured workout plan and movement prescription
 - `/workouts/session` — live set, rest timer, illustrated form guidance, and completion engine
 - `/coach` — private offline coaching conversation and safety fallback
-- `/nutrition` — food, protein, fibre, energy, and hydration journal
+- `/nutrition` — food-photo diary with editable calorie drafts, macros, and hydration
 - `/today` — interactive daily-readiness preview
 - `/progress` — saved check-ins plus detailed exercise, sleep, nutrition, weight, and non-scale trends
 - `/settings` — avatar selection and local privacy controls
@@ -72,6 +73,12 @@ flutter run
 
 The selected visual system is stored locally and restored at launch. Use the
 theme selector to review Graphite, Studio Lilac, and Soft Arcade.
+
+Dish photos can be captured with the camera or selected from the gallery. The
+offline experience creates an explicitly low-confidence, editable nutrition
+draft because a single image cannot measure portion mass, hidden ingredients,
+or cooking oils. Both the compressed thumbnail and corrected diary values stay
+on the device.
 
 ## Release boundary
 

@@ -9,6 +9,8 @@ class NutritionEntry {
     required this.proteinGrams,
     required this.fibreGrams,
     required this.loggedAt,
+    this.photoBase64,
+    this.estimateConfidence,
   });
 
   /// Stable identifier used for deletion.
@@ -32,6 +34,12 @@ class NutritionEntry {
   /// Local time at which the entry was recorded.
   final DateTime loggedAt;
 
+  /// Compressed meal thumbnail encoded for local-only diary persistence.
+  final String? photoBase64;
+
+  /// Plain-language confidence label for photo-assisted estimates.
+  final String? estimateConfidence;
+
   /// Serializes this entry for offline persistence.
   Map<String, Object?> toJson() => {
     'id': id,
@@ -41,6 +49,8 @@ class NutritionEntry {
     'proteinGrams': proteinGrams,
     'fibreGrams': fibreGrams,
     'loggedAt': loggedAt.toIso8601String(),
+    'photoBase64': photoBase64,
+    'estimateConfidence': estimateConfidence,
   };
 
   /// Restores a persisted entry.
@@ -53,6 +63,8 @@ class NutritionEntry {
       proteinGrams: json['proteinGrams'] as int,
       fibreGrams: json['fibreGrams'] as int,
       loggedAt: DateTime.parse(json['loggedAt'] as String),
+      photoBase64: json['photoBase64'] as String?,
+      estimateConfidence: json['estimateConfidence'] as String?,
     );
   }
 }

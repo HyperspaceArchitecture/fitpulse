@@ -8,7 +8,7 @@ import '../../helpers/in_memory_profile_repository.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
 
 void main() {
-  testWidgets('navigates through landing, auth, recovery, and Today screens', (
+  testWidgets('starts at member home then navigates through auth screens', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -24,6 +24,11 @@ void main() {
         child: const FitPulseApp(),
       ),
     );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Your momentum'), findsOneWidget);
+    expect(find.textContaining('better today'), findsOneWidget);
+    await tester.tap(find.byTooltip('Product overview'));
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Train smarter.'), findsOneWidget);

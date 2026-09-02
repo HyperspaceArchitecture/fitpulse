@@ -15,6 +15,8 @@ void main() {
           proteinGrams: 34,
           fibreGrams: 12,
           loggedAt: DateTime(2026, 9, 2, 12, 30),
+          photoBase64: 'aW1hZ2U=',
+          estimateConfidence: 'Low-confidence photo estimate',
         ),
         NutritionEntry(
           id: 'meal-2',
@@ -36,5 +38,10 @@ void main() {
     expect(restored.entries, hasLength(2));
     expect(restored.waterMillilitres, 750);
     expect(restored.entries.last.name, 'Yoghurt and berries');
+    expect(restored.entries.first.photoBase64, 'aW1hZ2U=');
+    expect(
+      restored.entries.first.estimateConfidence,
+      'Low-confidence photo estimate',
+    );
   });
 }

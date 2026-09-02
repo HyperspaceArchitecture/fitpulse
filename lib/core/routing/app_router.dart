@@ -18,8 +18,11 @@ import 'package:go_router/go_router.dart';
 
 /// Route paths used by the application.
 abstract final class AppRoutes {
-  /// Public product landing screen.
+  /// Member startup screen.
   static const landing = '/';
+
+  /// Public product introduction and authentication entry.
+  static const welcome = '/welcome';
 
   /// Sign-in screen.
   static const signIn = '/sign-in';
@@ -67,6 +70,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: AppRoutes.landing,
+        builder: (context, state) => const DashboardPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.welcome,
         builder: (context, state) => const LandingPage(),
       ),
       GoRoute(

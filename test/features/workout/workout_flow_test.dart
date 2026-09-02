@@ -5,6 +5,7 @@ import 'package:fitpulse/features/workout/data/workout_history_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/in_memory_profile_repository.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
@@ -30,16 +31,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Sign in'));
-    await tester.tap(find.text('Sign in'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Continue offline'));
-    await tester.tap(find.text('Continue offline'));
+    GoRouter.of(tester.element(find.byType(Scaffold))).go('/workouts');
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Start workout'));
-    await tester.tap(find.text('Start workout'));
-    await tester.pumpAndSettle();
     expect(find.text('Session plan'), findsOneWidget);
     expect(find.text('Goblet squat'), findsOneWidget);
 

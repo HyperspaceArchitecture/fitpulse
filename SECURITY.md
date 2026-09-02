@@ -2,6 +2,8 @@
 
 - Password fields are validated for UX only and are never stored or transmitted.
 - Health and profile data currently stays in platform preferences on the member's device.
+- Compressed meal-photo thumbnails stay on the device and are never uploaded by this build.
+- Photo-derived nutrition values are labelled low-confidence and require member review.
 - The offline coach is informational, identifies urgent symptom language, and does not diagnose.
 - External exercise videos open on YouTube and are clearly attributed before navigation.
 - Release builds deny administrator access until a trusted backend verifies an administrator role.

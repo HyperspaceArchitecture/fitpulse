@@ -41,14 +41,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Sign-in's offline entry point opens the personalized dashboard.
-    await tester.ensureVisible(find.text('Sign in'));
-    await tester.tap(find.text('Sign in'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Continue offline'));
-    await tester.tap(find.text('Continue offline'));
-    await tester.pumpAndSettle();
-
     expect(find.text('Ready, Sam?'), findsOneWidget);
     expect(find.text('Strength + mobility'), findsOneWidget);
     expect(find.text('Today’s signals'), findsOneWidget);

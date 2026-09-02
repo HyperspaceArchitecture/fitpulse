@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/features/nutrition/application/nutrition_controller.dart';
 import 'package:fitpulse/features/nutrition/domain/nutrition_day.dart';
@@ -7,6 +10,7 @@ import 'package:fitpulse/shared/widgets/glass_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// Offline-first nutrition and hydration journal.
 class NutritionPage extends ConsumerWidget {
@@ -81,26 +85,100 @@ class NutritionPage extends ConsumerWidget {
       ),
       floatingActionButton: journal.hasValue
           ? FloatingActionButton.extended(
-              onPressed: () => _showAddMeal(context, ref),
-              icon: const Icon(Icons.add_rounded),
-              label: const Text('Log food'),
+              onPressed: () => _chooseLogMethod(context, ref),
+              icon: const Icon(Icons.add_a_photo_outlined),
+              label: const Text('Add meal'),
             )
           : null,
     );
   }
 
-  Future<void> _showAddMeal(BuildContext context, WidgetRef ref) async {
+  Future<void> _chooseLogMethod(BuildContext context, WidgetRef ref) async {
+    final action = await showModalBottomSheet<_MealLogAction>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Take a dish photo'),
+              subtitle: const Text('Create an editable visual estimate'),
+              onTap: () => Navigator.pop(context, _MealLogAction.camera),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose a dish photo'),
+              subtitle: const Text('Use a photo already on this device'),
+              onTap: () => Navigator.pop(context, _MealLogAction.gallery),
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_note_rounded),
+              title: const Text('Log without a photo'),
+              onTap: () => Navigator.pop(context, _MealLogAction.manual),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (action == null) return;
+    if (!context.mounted) return;
+    if (action == _MealLogAction.manual) {
+      await _showAddMeal(context, ref);
+      return;
+    }
+    try {
+      final image = await ImagePicker().pickImage(
+        source: action == _MealLogAction.camera
+            ? ImageSource.camera
+            : ImageSource.gallery,
+        maxWidth: 800,
+        maxHeight: 800,
+        imageQuality: 65,
+      );
+      if (image == null || !context.mounted) return;
+      final bytes = await image.readAsBytes();
+      if (!context.mounted) return;
+      if (bytes.lengthInBytes > 1500000) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('That photo is too large. Choose a smaller image.'),
+          ),
+        );
+        return;
+      }
+      await _showAddMeal(context, ref, photoBytes: bytes);
+    } on Object {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'The camera or photo picker is not available on this device.',
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _showAddMeal(
+    BuildContext context,
+    WidgetRef ref, {
+    Uint8List? photoBytes,
+  }) async {
     final entry = await showModalBottomSheet<NutritionEntry>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      builder: (context) => const _AddMealSheet(),
+      builder: (context) => _AddMealSheet(photoBytes: photoBytes),
     );
     if (entry != null) {
       await ref.read(nutritionControllerProvider.notifier).addEntry(entry);
     }
   }
 }
+
+enum _MealLogAction { camera, gallery, manual }
 
 class _NutritionContent extends ConsumerWidget {
   const _NutritionContent({required this.day});
@@ -325,10 +403,19 @@ class _MealTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(child: Text(entry.meal.characters.first)),
+      leading: entry.photoBase64 == null
+          ? CircleAvatar(child: Text(entry.meal.characters.first))
+          : CircleAvatar(
+              backgroundImage: MemoryImage(base64Decode(entry.photoBase64!)),
+            ),
       title: Text(entry.name),
       subtitle: Text(
-        '${entry.meal} • ${entry.proteinGrams} g protein • ${entry.fibreGrams} g fibre',
+        [
+          entry.meal,
+          '${entry.proteinGrams} g protein',
+          '${entry.fibreGrams} g fibre',
+          if (entry.estimateConfidence != null) entry.estimateConfidence!,
+        ].join(' • '),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -392,7 +479,9 @@ class _ErrorPanel extends StatelessWidget {
 }
 
 class _AddMealSheet extends StatefulWidget {
-  const _AddMealSheet();
+  const _AddMealSheet({this.photoBytes});
+
+  final Uint8List? photoBytes;
 
   @override
   State<_AddMealSheet> createState() => _AddMealSheetState();
@@ -405,6 +494,17 @@ class _AddMealSheetState extends State<_AddMealSheet> {
   final _proteinController = TextEditingController();
   final _fibreController = TextEditingController();
   String _meal = 'Breakfast';
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.photoBytes != null) {
+      _nameController.text = 'Photo meal';
+      _energyController.text = '650';
+      _proteinController.text = '30';
+      _fibreController.text = '8';
+    }
+  }
 
   @override
   void dispose() {
@@ -435,9 +535,27 @@ class _AddMealSheetState extends State<_AddMealSheet> {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 6),
-              const Text(
-                'Use your best estimate. You can remove the entry at any time.',
+              Text(
+                widget.photoBytes == null
+                    ? 'Use your best estimate. You can remove the entry at any time.'
+                    : 'Low-confidence visual draft: portion size, ingredients and cooking oils cannot be measured from one photo. Review every value before saving.',
               ),
+              if (widget.photoBytes != null) ...[
+                const SizedBox(height: 14),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: Image.memory(
+                    widget.photoBytes!,
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Chip(
+                  avatar: Icon(Icons.auto_awesome_rounded, size: 17),
+                  label: Text('LOW-CONFIDENCE ESTIMATE — CONFIRM BELOW'),
+                ),
+              ],
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 initialValue: _meal,
@@ -513,6 +631,12 @@ class _AddMealSheetState extends State<_AddMealSheet> {
         proteinGrams: int.parse(_proteinController.text),
         fibreGrams: int.parse(_fibreController.text),
         loggedAt: now,
+        photoBase64: widget.photoBytes == null
+            ? null
+            : base64Encode(widget.photoBytes!),
+        estimateConfidence: widget.photoBytes == null
+            ? null
+            : 'Low-confidence photo estimate',
       ),
     );
   }

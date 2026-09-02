@@ -5,6 +5,7 @@ import 'package:fitpulse/features/onboarding/domain/fitness_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/in_memory_profile_repository.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
@@ -27,8 +28,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Create your plan'));
-    await tester.tap(find.text('Create your plan'));
+    GoRouter.of(tester.element(find.byType(Scaffold))).go('/register');
     await tester.pumpAndSettle();
 
     await tester.enterText(
