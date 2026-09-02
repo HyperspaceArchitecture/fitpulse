@@ -1,8 +1,8 @@
 import 'package:fitpulse/app.dart';
 import 'package:fitpulse/core/theme/theme_preferences.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/in_memory_theme_preferences.dart';

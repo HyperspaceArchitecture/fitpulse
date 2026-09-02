@@ -130,6 +130,7 @@ class WorkoutEngineController extends Notifier<WorkoutSessionState> {
               completedSets: completedSets,
             ),
           );
+      ref.invalidate(latestWorkoutProvider);
       return;
     }
 

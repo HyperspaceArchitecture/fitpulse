@@ -1,6 +1,7 @@
 import 'package:fitpulse/app.dart';
 import 'package:fitpulse/core/theme/theme_preferences.dart';
 import 'package:fitpulse/features/onboarding/data/profile_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,8 +27,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Your momentum'), findsOneWidget);
-    expect(find.textContaining('better today'), findsOneWidget);
+    expect(find.byKey(const Key('startup-avatar')), findsOneWidget);
+    expect(find.text('Your next workout will move the needle'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('startup-avatar')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Product overview'));
     await tester.pumpAndSettle();
 

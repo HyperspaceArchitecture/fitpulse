@@ -4,6 +4,7 @@ import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:fitpulse/features/coach/presentation/pages/coach_page.dart';
 import 'package:fitpulse/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:fitpulse/features/dashboard/presentation/pages/startup_page.dart';
 import 'package:fitpulse/features/landing/presentation/pages/landing_page.dart';
 import 'package:fitpulse/features/nutrition/presentation/pages/nutrition_page.dart';
 import 'package:fitpulse/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -70,7 +71,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: AppRoutes.landing,
-        builder: (context, state) => const DashboardPage(),
+        builder: (context, state) => const StartupPage(),
       ),
       GoRoute(
         path: AppRoutes.welcome,

@@ -1,4 +1,5 @@
 import 'package:fitpulse/core/routing/app_router.dart';
+import 'package:fitpulse/features/dashboard/presentation/widgets/momentum_needle.dart';
 import 'package:fitpulse/features/workout/application/workout_engine_controller.dart';
 import 'package:fitpulse/features/workout/presentation/widgets/exercise_motion_card.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
@@ -277,14 +278,20 @@ class _CompletedSession extends StatelessWidget {
                       '${session.completedSets} sets logged offline. Consistency beats perfection.',
                       textAlign: TextAlign.center,
                     ),
+                    const SizedBox(height: 18),
+                    MomentumNeedle(
+                      value: 78 + session.completedSets * 0.24,
+                      lift: session.completedSets * 0.24,
+                      compact: true,
+                    ),
                     const SizedBox(height: 26),
                     FilledButton.icon(
                       onPressed: () {
                         onReset();
-                        context.go(AppRoutes.dashboard);
+                        context.go(AppRoutes.landing);
                       },
-                      icon: const Icon(Icons.home_rounded),
-                      label: const Text('Back to dashboard'),
+                      icon: const Icon(Icons.trending_up_rounded),
+                      label: const Text('See my momentum'),
                     ),
                   ],
                 ),

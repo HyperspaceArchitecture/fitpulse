@@ -10,4 +10,10 @@ class InMemoryWorkoutHistoryRepository implements WorkoutHistoryRepository {
   Future<void> save(CompletedWorkout workout) async {
     records.add(workout);
   }
+
+  @override
+  Future<CompletedWorkout?> latest() async {
+    if (records.isEmpty) return null;
+    return records.last;
+  }
 }

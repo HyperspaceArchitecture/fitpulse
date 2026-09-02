@@ -101,6 +101,18 @@ class CompletedWorkout {
   /// Number of completed working sets.
   final int completedSets;
 
+  /// Restores a locally persisted completion.
+  factory CompletedWorkout.fromJson(Map<String, Object?> json) =>
+      CompletedWorkout(
+        planId: json['planId']! as String,
+        completedAt: DateTime.parse(json['completedAt']! as String),
+        durationSeconds: json['durationSeconds']! as int,
+        completedSets: json['completedSets']! as int,
+      );
+
+  /// Encouragement-only movement earned by completing working sets.
+  double get momentumLift => (completedSets * 0.24).clamp(0, 6).toDouble();
+
   /// Serializes the record for local persistence.
   Map<String, Object> toJson() => {
     'planId': planId,

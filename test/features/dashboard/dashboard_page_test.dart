@@ -2,8 +2,10 @@ import 'package:fitpulse/app.dart';
 import 'package:fitpulse/core/theme/theme_preferences.dart';
 import 'package:fitpulse/features/onboarding/data/profile_repository.dart';
 import 'package:fitpulse/features/onboarding/domain/fitness_profile.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/in_memory_profile_repository.dart';
 import '../../helpers/in_memory_theme_preferences.dart';
@@ -39,6 +41,9 @@ void main() {
         child: const FitPulseApp(),
       ),
     );
+    await tester.pumpAndSettle();
+
+    GoRouter.of(tester.element(find.byType(Scaffold))).go('/dashboard');
     await tester.pumpAndSettle();
 
     expect(find.text('Ready, Sam?'), findsOneWidget);
