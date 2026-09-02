@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/features/nutrition/application/nutrition_controller.dart';
 import 'package:fitpulse/features/nutrition/domain/nutrition_day.dart';
-import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
-import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
+import 'package:fitpulse/shared/widgets/member_page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 /// Offline-first nutrition and hydration journal.
@@ -30,19 +27,7 @@ class NutritionPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    children: [
-                      IconButton.filledTonal(
-                        tooltip: 'Back to dashboard',
-                        onPressed: () => context.go(AppRoutes.dashboard),
-                        icon: const Icon(Icons.arrow_back_rounded),
-                      ),
-                      const SizedBox(width: 12),
-                      const BrandMark(),
-                      const Spacer(),
-                      const ThemeSelector(),
-                    ],
-                  ),
+                  const MemberPageHeader(),
                   const SizedBox(height: 36),
                   Text(
                     'NOURISH',

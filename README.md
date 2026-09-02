@@ -12,6 +12,7 @@ application built with Flutter and Material 3.
 - Material 3 design tokens and reusable glass surfaces
 - Persisted Graphite, Studio Lilac, and Soft Arcade visual systems
 - Responsive layouts for phones, tablets, foldables, web, and desktop
+- Persistent mobile navigation across Today, Train, Food, Progress, and Coach
 - Backend-agnostic repository and service boundaries; no Firebase dependency
 - Offline persistence for profile, appearance, workouts, nutrition, and progress
 - Deny-by-default production admin access

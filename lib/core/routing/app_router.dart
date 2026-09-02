@@ -1,3 +1,5 @@
+import 'package:fitpulse/core/routing/app_routes.dart';
+import 'package:fitpulse/core/routing/app_shell.dart';
 import 'package:fitpulse/features/admin/presentation/pages/admin_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:fitpulse/features/auth/presentation/pages/register_page.dart';
@@ -17,53 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// Route paths used by the application.
-abstract final class AppRoutes {
-  /// Member startup screen.
-  static const landing = '/';
-
-  /// Public product introduction and authentication entry.
-  static const welcome = '/welcome';
-
-  /// Sign-in screen.
-  static const signIn = '/sign-in';
-
-  /// Account-creation screen.
-  static const register = '/register';
-
-  /// Password-recovery screen.
-  static const forgotPassword = '/forgot-password';
-
-  /// Offline-first fitness profile setup.
-  static const onboarding = '/onboarding';
-
-  /// Personalized daily member dashboard.
-  static const dashboard = '/dashboard';
-
-  /// Interactive Today experience preview.
-  static const today = '/today';
-
-  /// Holistic progress and body-trend screen.
-  static const progress = '/progress';
-
-  /// Today's workout plan overview.
-  static const workouts = '/workouts';
-
-  /// Active set-by-set workout session.
-  static const workoutSession = '/workouts/session';
-
-  /// Privacy-first coaching conversation.
-  static const coach = '/coach';
-
-  /// Offline nutrition and hydration journal.
-  static const nutrition = '/nutrition';
-
-  /// Local member preferences and privacy controls.
-  static const settings = '/settings';
-
-  /// Administrator portal with deny-by-default production access.
-  static const admin = '/admin';
-}
+export 'app_routes.dart';
 
 /// Owns the router and disposes it with the provider container.
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -93,33 +49,39 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.onboarding,
         builder: (context, state) => const OnboardingPage(),
       ),
-      GoRoute(
-        path: AppRoutes.dashboard,
-        builder: (context, state) => const DashboardPage(),
+      ShellRoute(
+        builder: (context, state, child) =>
+            AppShell(location: state.uri.path, child: child),
+        routes: [
+          GoRoute(
+            path: AppRoutes.dashboard,
+            builder: (context, state) => const DashboardPage(),
+          ),
+          GoRoute(
+            path: AppRoutes.progress,
+            builder: (context, state) => const ProgressPage(),
+          ),
+          GoRoute(
+            path: AppRoutes.workouts,
+            builder: (context, state) => const WorkoutPlanPage(),
+          ),
+          GoRoute(
+            path: AppRoutes.coach,
+            builder: (context, state) => const CoachPage(),
+          ),
+          GoRoute(
+            path: AppRoutes.nutrition,
+            builder: (context, state) => const NutritionPage(),
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoutes.today,
         builder: (context, state) => const ThemePreviewPage(),
       ),
       GoRoute(
-        path: AppRoutes.progress,
-        builder: (context, state) => const ProgressPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.workouts,
-        builder: (context, state) => const WorkoutPlanPage(),
-      ),
-      GoRoute(
         path: AppRoutes.workoutSession,
         builder: (context, state) => const WorkoutSessionPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.coach,
-        builder: (context, state) => const CoachPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.nutrition,
-        builder: (context, state) => const NutritionPage(),
       ),
       GoRoute(
         path: AppRoutes.settings,

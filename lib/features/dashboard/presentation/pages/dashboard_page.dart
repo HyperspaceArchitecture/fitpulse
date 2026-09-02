@@ -48,8 +48,10 @@ class DashboardPage extends ConsumerWidget {
                     children: [
                       _DashboardHeader(profile: profile),
                       const SizedBox(height: 38),
-                      _MotivationHome(profile: profile),
-                      const SizedBox(height: 24),
+                      if (MediaQuery.sizeOf(context).width >= 780) ...[
+                        _MotivationHome(profile: profile),
+                        const SizedBox(height: 24),
+                      ],
                       _DashboardIntro(profile: profile, plan: plan),
                       const SizedBox(height: 24),
                       _MainGrid(plan: plan),
@@ -189,14 +191,15 @@ class _GrowthLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<FitPulseColors>()!;
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.trending_up_rounded, color: colors.success),
         const SizedBox(width: 6),
-        Text(
-          '${value >= 0 ? '+' : ''}${value.toStringAsFixed(2)}% $period',
-          style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: colors.success, fontWeight: FontWeight.w800),
+        Expanded(
+          child: Text(
+            '${value >= 0 ? '+' : ''}${value.toStringAsFixed(2)}% $period',
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(color: colors.success, fontWeight: FontWeight.w700),
+          ),
         ),
       ],
     );
@@ -210,37 +213,54 @@ class _DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const BrandMark(),
-        const Spacer(),
-        IconButton.filledTonal(
-          tooltip: 'Product overview',
-          onPressed: () => context.go(AppRoutes.welcome),
-          icon: const Icon(Icons.info_outline_rounded),
-        ),
-        const SizedBox(width: 10),
-        IconButton.filledTonal(
-          tooltip: 'Open AI Coach',
-          onPressed: () => context.go(AppRoutes.coach),
-          icon: const Icon(Icons.auto_awesome_rounded),
-        ),
-        const SizedBox(width: 10),
-        if (profile != null)
-          IconButton.filledTonal(
-            tooltip: 'Edit fitness profile',
-            onPressed: () => context.go(AppRoutes.onboarding),
-            icon: const Icon(Icons.person_outline_rounded),
-          ),
-        if (profile != null) const SizedBox(width: 10),
-        IconButton.filledTonal(
-          tooltip: 'Settings and privacy',
-          onPressed: () => context.go(AppRoutes.settings),
-          icon: const Icon(Icons.settings_outlined),
-        ),
-        const SizedBox(width: 10),
-        const ThemeSelector(),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 700) {
+          return Row(
+            children: [
+              const BrandMark(),
+              const Spacer(),
+              IconButton.filledTonal(
+                tooltip: 'Settings and privacy',
+                onPressed: () => context.go(AppRoutes.settings),
+                icon: const Icon(Icons.settings_outlined),
+              ),
+            ],
+          );
+        }
+        return Row(
+          children: [
+            const BrandMark(),
+            const Spacer(),
+            IconButton.filledTonal(
+              tooltip: 'Product overview',
+              onPressed: () => context.go(AppRoutes.welcome),
+              icon: const Icon(Icons.info_outline_rounded),
+            ),
+            const SizedBox(width: 10),
+            IconButton.filledTonal(
+              tooltip: 'Open AI Coach',
+              onPressed: () => context.go(AppRoutes.coach),
+              icon: const Icon(Icons.auto_awesome_rounded),
+            ),
+            const SizedBox(width: 10),
+            if (profile != null)
+              IconButton.filledTonal(
+                tooltip: 'Edit fitness profile',
+                onPressed: () => context.go(AppRoutes.onboarding),
+                icon: const Icon(Icons.person_outline_rounded),
+              ),
+            if (profile != null) const SizedBox(width: 10),
+            IconButton.filledTonal(
+              tooltip: 'Settings and privacy',
+              onPressed: () => context.go(AppRoutes.settings),
+              icon: const Icon(Icons.settings_outlined),
+            ),
+            const SizedBox(width: 10),
+            const ThemeSelector(),
+          ],
+        );
+      },
     );
   }
 }
@@ -529,16 +549,25 @@ class _WeeklyPlan extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Text('Your week', style: Theme.of(context).textTheme.titleLarge),
-              const Spacer(),
-              Text(
-                '3 of 7 complete',
-                style: Theme.of(context).textTheme.labelLarge
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final title = Text(
+                'Your week',
+                style: Theme.of(context).textTheme.titleLarge,
+              );
+              final progress = Text(
+                '3 / 7 complete',
+                style: Theme.of(context).textTheme.bodySmall
                     ?.copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-            ],
+              );
+              if (constraints.maxWidth < 380) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [title, const SizedBox(height: 4), progress],
+                );
+              }
+              return Row(children: [title, const Spacer(), progress]);
+            },
           ),
           const SizedBox(height: 18),
           SingleChildScrollView(

@@ -14,6 +14,10 @@ void main() {
   testWidgets('shows a personalized dashboard and progress navigation', (
     tester,
   ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
     final profile = FitnessProfile(
       displayName: 'Sam',
       goal: FitnessGoal.buildStrength,
@@ -46,6 +50,12 @@ void main() {
     GoRouter.of(tester.element(find.byType(Scaffold))).go('/dashboard');
     await tester.pumpAndSettle();
 
+    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Train'), findsOneWidget);
+    expect(find.text('Food'), findsOneWidget);
+    expect(find.text('Progress'), findsOneWidget);
+    expect(find.text('Coach'), findsOneWidget);
     expect(find.text('Ready, Sam?'), findsOneWidget);
     expect(find.text('Strength + mobility'), findsOneWidget);
     expect(find.text('Today’s signals'), findsOneWidget);

@@ -43,6 +43,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('I feel tired and need recovery help'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.textContaining('reduce load by about 10–20%'),
+      180,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.textContaining('reduce load by about 10–20%'), findsOneWidget);
   });
 }

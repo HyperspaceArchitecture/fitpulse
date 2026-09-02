@@ -1,16 +1,13 @@
-import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
 import 'package:fitpulse/features/progress/application/progress_controller.dart';
 import 'package:fitpulse/features/progress/data/progress_preview_data.dart';
 import 'package:fitpulse/features/progress/domain/wellness_metric.dart';
 import 'package:fitpulse/features/progress/domain/wellness_score.dart';
 import 'package:fitpulse/features/progress/presentation/widgets/wellness_chart.dart';
-import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
-import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
+import 'package:fitpulse/shared/widgets/member_page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 /// Holistic progress screen that balances scale and non-scale outcomes.
 class ProgressPage extends ConsumerWidget {
@@ -198,27 +195,7 @@ class _ProgressHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 20,
-      runSpacing: 16,
-      alignment: WrapAlignment.spaceBetween,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton.filledTonal(
-              tooltip: 'Back to landing',
-              onPressed: () => context.go(AppRoutes.landing),
-              icon: const Icon(Icons.arrow_back_rounded),
-            ),
-            const SizedBox(width: 12),
-            const BrandMark(),
-          ],
-        ),
-        const ThemeSelector(),
-      ],
-    );
+    return const MemberPageHeader();
   }
 }
 

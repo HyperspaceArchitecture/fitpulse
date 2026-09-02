@@ -1,11 +1,10 @@
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
-import 'package:fitpulse/features/theme_preview/presentation/widgets/theme_selector.dart';
 import 'package:fitpulse/features/workout/application/workout_engine_controller.dart';
 import 'package:fitpulse/features/workout/domain/workout_plan.dart';
 import 'package:fitpulse/features/workout/presentation/widgets/exercise_motion_card.dart';
-import 'package:fitpulse/shared/widgets/brand_mark.dart';
 import 'package:fitpulse/shared/widgets/glass_panel.dart';
+import 'package:fitpulse/shared/widgets/member_page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,19 +37,7 @@ class WorkoutPlanPage extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Row(
-                        children: [
-                          IconButton.filledTonal(
-                            tooltip: 'Back to dashboard',
-                            onPressed: () => context.go(AppRoutes.dashboard),
-                            icon: const Icon(Icons.arrow_back_rounded),
-                          ),
-                          const SizedBox(width: 12),
-                          const BrandMark(),
-                          const Spacer(),
-                          const ThemeSelector(),
-                        ],
-                      ),
+                      const MemberPageHeader(),
                       const SizedBox(height: 36),
                       Text(
                         'TODAY’S WORKOUT',
