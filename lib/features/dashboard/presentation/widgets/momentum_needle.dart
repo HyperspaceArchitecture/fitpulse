@@ -39,26 +39,32 @@ class MomentumNeedle extends StatelessWidget {
                 active: colors.success,
                 marker: Theme.of(context).colorScheme.onSurface,
               ),
-              child: Align(
-                alignment: const Alignment(0, 0.55),
-                child:
-                    center ??
-                    Text(
-                      animatedValue.round().toString(),
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.w900),
-                    ),
+              child: Center(
+                child: Transform.translate(
+                  offset: Offset(0, size * 0.16),
+                  child:
+                      center ??
+                      Text(
+                        animatedValue.round().toString(),
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                ),
               ),
             ),
           ),
-          Text(
-            lift > 0
-                ? '+${lift.toStringAsFixed(1)} momentum from your workout'
-                : 'Your next workout will move the needle',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: lift > 0 ? colors.success : null,
-              fontWeight: FontWeight.w500,
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              lift > 0
+                  ? '+${lift.toStringAsFixed(1)} momentum from your workout'
+                  : 'Your next workout will move the needle',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: lift > 0 ? colors.success : null,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -93,12 +99,12 @@ class _NeedlePainter extends CustomPainter {
       ..color = track
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = size.width * 0.035;
+      ..strokeWidth = size.width * 0.028;
     final activePaint = Paint()
       ..color = active
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = size.width * 0.035;
+      ..strokeWidth = size.width * 0.028;
     canvas.drawArc(rect, start, sweep, false, trackPaint);
     canvas.drawArc(
       rect,
@@ -127,12 +133,12 @@ class _NeedlePainter extends CustomPainter {
     }
     canvas.drawCircle(
       currentPoint,
-      size.width * 0.032,
+      size.width * 0.024,
       Paint()..color = marker,
     );
     canvas.drawCircle(
       currentPoint,
-      size.width * 0.014,
+      size.width * 0.010,
       Paint()..color = active,
     );
   }

@@ -202,8 +202,8 @@ class _ImprovementPulseState extends State<_ImprovementPulse>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<FitPulseColors>()!;
     final badge = Container(
-      width: widget.compact ? 100 : 126,
-      height: widget.compact ? 100 : 126,
+      width: widget.compact ? 86 : 116,
+      height: widget.compact ? 86 : 116,
       padding: EdgeInsets.all(widget.compact ? 8 : 12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -218,7 +218,7 @@ class _ImprovementPulseState extends State<_ImprovementPulse>
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: SizedBox(
-          width: widget.compact ? 82 : 98,
+          width: widget.compact ? 72 : 94,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
