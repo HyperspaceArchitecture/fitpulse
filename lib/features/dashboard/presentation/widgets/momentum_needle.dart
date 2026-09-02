@@ -9,12 +9,14 @@ class MomentumNeedle extends StatelessWidget {
     required this.value,
     required this.lift,
     this.compact = false,
+    this.center,
     super.key,
   });
 
   final double value;
   final double lift;
   final bool compact;
+  final Widget? center;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +40,13 @@ class MomentumNeedle extends StatelessWidget {
               ),
               child: Align(
                 alignment: const Alignment(0, 0.55),
-                child: Text(
-                  animatedValue.round().toString(),
-                  style: Theme.of(context).textTheme.headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w900),
-                ),
+                child:
+                    center ??
+                    Text(
+                      animatedValue.round().toString(),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(fontWeight: FontWeight.w900),
+                    ),
               ),
             ),
           ),

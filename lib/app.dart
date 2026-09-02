@@ -23,6 +23,51 @@ class FitPulseApp extends ConsumerWidget {
       darkTheme: FitPulseTheme.forVariant(selectedTheme),
       themeMode: ThemeMode.light,
       routerConfig: router,
+      builder: (context, child) {
+        if (Uri.base.queryParameters['preview'] != 'phone' || child == null) {
+          return child ?? const SizedBox.shrink();
+        }
+        return _PhonePreviewFrame(child: child);
+      },
+    );
+  }
+}
+
+class _PhonePreviewFrame extends StatelessWidget {
+  const _PhonePreviewFrame({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    const previewSize = Size(390, 844);
+    final media = MediaQuery.of(context);
+    return ColoredBox(
+      color: const Color(0xFFE9E7E3),
+      child: Center(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(36),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x33000000),
+                blurRadius: 32,
+                offset: Offset(0, 12),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(36),
+            child: SizedBox.fromSize(
+              size: previewSize,
+              child: MediaQuery(
+                data: media.copyWith(size: previewSize),
+                child: child,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

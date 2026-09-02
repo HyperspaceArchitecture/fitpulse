@@ -74,6 +74,9 @@ flutter run
 The selected visual system is stored locally and restored at launch. Use the
 theme selector to review Graphite, Studio Lilac, and Soft Arcade.
 
+Append `?preview=phone` before the hash route when reviewing the web build to
+render every screen in a consistent 390 × 844 phone canvas.
+
 Dish photos can be captured with the camera or selected from the gallery. The
 offline experience creates an explicitly low-confidence, editable nutrition
 draft because a single image cannot measure portion mass, hidden ingredients,

@@ -8,10 +8,17 @@ import 'package:flutter/material.dart';
 /// A deliberately simple single-line view of holistic growth.
 class SimpleGrowthChart extends StatelessWidget {
   /// Creates a green combined-growth chart.
-  const SimpleGrowthChart({required this.metrics, super.key});
+  const SimpleGrowthChart({
+    required this.metrics,
+    this.height = 210,
+    super.key,
+  });
 
   /// Chronological wellness inputs combined into one series.
   final List<WellnessMetric> metrics;
+
+  /// Chart height, allowing a denser phone startup without changing detail views.
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class SimpleGrowthChart extends StatelessWidget {
               labelStyle: Theme.of(context).textTheme.labelSmall!,
               labelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            child: const SizedBox(height: 210),
+            child: SizedBox(height: height),
           );
         },
       ),
