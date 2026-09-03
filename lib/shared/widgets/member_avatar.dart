@@ -28,21 +28,51 @@ class MemberAvatar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeControllerProvider).value;
-    final defaultIcon = switch (theme) {
-      AppThemeVariant.graphite => Icons.person_rounded,
-      AppThemeVariant.studioLilac => Icons.face_rounded,
-      AppThemeVariant.softArcade => Icons.face_3_rounded,
-      null => Icons.person_rounded,
-    };
     final avatarId = profile?.avatarId ?? 0;
-    final icon = avatarId == 0
-        ? defaultIcon
-        : icons[avatarId.clamp(0, icons.length - 1)];
+    if (avatarId == 0) {
+      final portraitIndex = switch (theme) {
+        AppThemeVariant.graphite => 0,
+        AppThemeVariant.studioLilac => 1,
+        AppThemeVariant.softArcade => 2,
+        null => 0,
+      };
+      return _ThemePortrait(radius: radius, index: portraitIndex);
+    }
+    final icon = icons[avatarId.clamp(0, icons.length - 1)];
     return CircleAvatar(
       radius: radius,
       backgroundColor: Theme.of(context).colorScheme.primary,
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
       child: Icon(icon, size: radius),
+    );
+  }
+}
+
+class _ThemePortrait extends StatelessWidget {
+  const _ThemePortrait({required this.radius, required this.index});
+
+  final double radius;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final diameter = radius * 2;
+    return SizedBox(
+      width: diameter,
+      height: diameter,
+      child: ClipOval(
+        child: OverflowBox(
+          alignment: Alignment(index - 1, 0),
+          maxWidth: diameter * 3,
+          maxHeight: diameter * 1.5,
+          child: Image.asset(
+            'assets/avatars/theme-portraits.png',
+            width: diameter * 3,
+            height: diameter * 1.5,
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
     );
   }
 }

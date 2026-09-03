@@ -29,6 +29,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/exercises/
+    - assets/avatars/theme-portraits.png
   fonts:
     - family: Fredoka
       fonts:
