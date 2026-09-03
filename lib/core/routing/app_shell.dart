@@ -12,8 +12,8 @@ class AppShell extends StatelessWidget {
   static const _destinations =
       <({String path, String label, IconData icon, IconData selectedIcon})>[
         (
-          path: AppRoutes.dashboard,
-          label: 'Today',
+          path: AppRoutes.landing,
+          label: 'Home',
           icon: Icons.home_outlined,
           selectedIcon: Icons.home_rounded,
         ),

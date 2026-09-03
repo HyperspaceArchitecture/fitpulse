@@ -53,7 +53,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Home'), findsOneWidget);
     expect(find.text('Train'), findsOneWidget);
     expect(find.text('Food'), findsOneWidget);
     expect(find.text('Progress'), findsOneWidget);
