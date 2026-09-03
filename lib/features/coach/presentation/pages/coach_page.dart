@@ -150,14 +150,14 @@ class _CoachHeading extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
-            child: const Icon(Icons.auto_awesome_rounded),
+            child: const Text('🙂', style: TextStyle(fontSize: 24)),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('AI Coach', style: Theme.of(context).textTheme.titleLarge),
+                Text('Pulse', style: Theme.of(context).textTheme.titleLarge),
                 Text(
                   'Offline guidance · not medical advice',
                   style: Theme.of(context).textTheme.bodySmall,

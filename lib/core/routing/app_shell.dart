@@ -37,7 +37,7 @@ class AppShell extends StatelessWidget {
         ),
         (
           path: AppRoutes.coach,
-          label: 'Coach',
+          label: 'Pulse',
           icon: Icons.auto_awesome_outlined,
           selectedIcon: Icons.auto_awesome_rounded,
         ),

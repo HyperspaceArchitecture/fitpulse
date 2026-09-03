@@ -57,7 +57,7 @@ void main() {
     expect(find.text('Train'), findsOneWidget);
     expect(find.text('Food'), findsOneWidget);
     expect(find.text('Progress'), findsOneWidget);
-    expect(find.text('Coach'), findsOneWidget);
+    expect(find.text('Pulse'), findsOneWidget);
     expect(find.text('Ready, Sam?'), findsOneWidget);
     expect(find.text('Strength + mobility'), findsOneWidget);
     expect(find.text('Today’s signals'), findsOneWidget);

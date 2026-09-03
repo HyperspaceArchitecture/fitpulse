@@ -31,7 +31,7 @@ void main() {
     GoRouter.of(tester.element(find.byType(Scaffold))).go('/coach');
     await tester.pumpAndSettle();
 
-    expect(find.text('AI Coach'), findsOneWidget);
+    expect(find.text('Pulse'), findsNWidgets(2));
     expect(find.textContaining('Offline guidance'), findsOneWidget);
     expect(find.text('PRIVATE'), findsOneWidget);
 

@@ -31,7 +31,7 @@ class CoachController extends Notifier<CoachState> {
         CoachMessage(
           id: 'welcome',
           role: CoachRole.coach,
-          text: 'I’m your offline FitPulse coach. I can help adjust training, recovery, nutrition habits, and motivation without sending this chat off your device.',
+          text: 'I’m Pulse, your private FitPulse guide. I can help adjust training, recovery, nutrition habits, and motivation without sending this chat off your device.',
           createdAt: DateTime.now().toUtc(),
         ),
       ],

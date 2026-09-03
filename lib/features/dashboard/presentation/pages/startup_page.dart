@@ -156,6 +156,8 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                           _ThemeSwitcher(selected: selectedTheme),
                           const SizedBox(height: 14),
                           const _EnterAppButton(),
+                          const SizedBox(height: 12),
+                          const _PulseBuddy(),
                         ],
                       );
                     }
@@ -174,6 +176,8 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                               _ThemeSwitcher(selected: selectedTheme),
                               const SizedBox(height: 14),
                               const _EnterAppButton(),
+                              const SizedBox(height: 12),
+                              const _PulseBuddy(),
                             ],
                           ),
                         ),
@@ -350,6 +354,59 @@ class _EnterAppButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PulseBuddy extends StatefulWidget {
+  const _PulseBuddy();
+
+  @override
+  State<_PulseBuddy> createState() => _PulseBuddyState();
+}
+
+class _PulseBuddyState extends State<_PulseBuddy>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1800),
+    )..repeat(reverse: true, count: 6);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return FadeTransition(
+      opacity: Tween(begin: 0.7, end: 1.0).animate(_controller),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: primary.withValues(alpha: 0.14),
+            child: const Text('🙂', style: TextStyle(fontSize: 20)),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              'Pulse is here to guide you',
+              style: Theme.of(context).textTheme.bodySmall,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }
