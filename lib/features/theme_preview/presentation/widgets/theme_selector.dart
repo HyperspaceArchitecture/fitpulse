@@ -68,5 +68,6 @@ class ThemeSelector extends ConsumerWidget {
     AppThemeVariant.graphite => Icons.bolt_rounded,
     AppThemeVariant.studioLilac => Icons.auto_awesome_rounded,
     AppThemeVariant.softArcade => Icons.bubble_chart_rounded,
+    AppThemeVariant.cosmicPulse => Icons.blur_on_rounded,
   };
 }

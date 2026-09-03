@@ -34,6 +34,7 @@ class MemberAvatar extends ConsumerWidget {
         AppThemeVariant.graphite => 0,
         AppThemeVariant.studioLilac => 1,
         AppThemeVariant.softArcade => 2,
+        AppThemeVariant.cosmicPulse => 1,
         null => 0,
       };
       return _ThemePortrait(radius: radius, index: portraitIndex);

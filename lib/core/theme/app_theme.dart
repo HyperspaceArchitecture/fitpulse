@@ -73,6 +73,7 @@ abstract final class FitPulseTheme {
       AppThemeVariant.graphite => _graphite,
       AppThemeVariant.studioLilac => _studioLilac,
       AppThemeVariant.softArcade => _softArcade,
+      AppThemeVariant.cosmicPulse => _cosmicPulse,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
@@ -231,6 +232,22 @@ abstract final class FitPulseTheme {
       warning: Color(0xFFF5C15B),
       danger: Color(0xFFE96F79),
       glow: Color(0xFFD8D1FF),
+    ),
+  );
+
+  static const _cosmicPulse = _ThemePalette(
+    brightness: Brightness.dark,
+    primary: Color(0xFF8C7CFF),
+    secondary: Color(0xFF55D9FF),
+    tertiary: Color(0xFFFF7BD5),
+    friendly: false,
+    colors: FitPulseColors(
+      background: Color(0xFF090D2B),
+      panel: Color(0xFF11184A),
+      success: Color(0xFF55D9FF),
+      warning: Color(0xFFFFC857),
+      danger: Color(0xFFFF6B9D),
+      glow: Color(0xFF4035A8),
     ),
   );
 }
