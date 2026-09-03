@@ -156,9 +156,7 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                           const SizedBox(height: 18),
                           _ThemeSwitcher(selected: selectedTheme),
                           const SizedBox(height: 14),
-                          const _EnterAppButton(),
-                          const SizedBox(height: 12),
-                          const _PulseBuddy(),
+                          const _LandingActions(),
                         ],
                       );
                     }
@@ -176,9 +174,7 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                               const SizedBox(height: 18),
                               _ThemeSwitcher(selected: selectedTheme),
                               const SizedBox(height: 14),
-                              const _EnterAppButton(),
-                              const SizedBox(height: 12),
-                              const _PulseBuddy(),
+                              const _LandingActions(),
                             ],
                           ),
                         ),
@@ -343,17 +339,17 @@ class _EnterAppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       message: 'Enter FitPulse',
-      child: IconButton.filled(
+      child: IconButton(
         key: const Key('startup-enter'),
         onPressed: () => context.go(AppRoutes.dashboard),
         icon: const Icon(Icons.home_rounded),
-        iconSize: 22,
+        iconSize: 30,
         style: IconButton.styleFrom(
-          minimumSize: const Size(52, 46),
-          padding: const EdgeInsets.all(10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          minimumSize: const Size(64, 64),
+          padding: const EdgeInsets.all(14),
+          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          side: BorderSide.none,
         ),
       ),
     );
@@ -365,6 +361,22 @@ class _PulseBuddy extends StatefulWidget {
 
   @override
   State<_PulseBuddy> createState() => _PulseBuddyState();
+}
+
+class _LandingActions extends StatelessWidget {
+  const _LandingActions();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Flexible(child: _PulseBuddy()),
+        SizedBox(width: 8),
+        _EnterAppButton(),
+      ],
+    );
+  }
 }
 
 class _PulseBuddyState extends State<_PulseBuddy>
