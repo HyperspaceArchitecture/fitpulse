@@ -11,6 +11,7 @@ import 'package:fitpulse/features/progress/domain/wellness_score.dart';
 import 'package:fitpulse/features/progress/presentation/widgets/simple_growth_chart.dart';
 import 'package:fitpulse/features/workout/data/workout_history_repository.dart';
 import 'package:fitpulse/shared/widgets/member_avatar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -346,10 +347,10 @@ class _EnterAppButton extends StatelessWidget {
         key: const Key('startup-enter'),
         onPressed: () => context.go(AppRoutes.dashboard),
         icon: const Icon(Icons.home_rounded),
-        iconSize: 30,
+        iconSize: 22,
         style: IconButton.styleFrom(
-          minimumSize: const Size(72, 56),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          minimumSize: const Size(52, 46),
+          padding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -376,7 +377,7 @@ class _PulseBuddyState extends State<_PulseBuddy>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
-    )..repeat(reverse: true, count: 6);
+    )..repeat(reverse: true, count: kReleaseMode ? null : 6);
   }
 
   @override
@@ -394,15 +395,15 @@ class _PulseBuddyState extends State<_PulseBuddy>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 18,
+            radius: 54,
             backgroundColor: primary.withValues(alpha: 0.14),
-            child: const Text('🙂', style: TextStyle(fontSize: 20)),
+            child: const Text('🙂', style: TextStyle(fontSize: 52)),
           ),
           const SizedBox(width: 8),
           Flexible(
             child: Text(
               'Pulse is here to guide you',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.titleMedium,
               overflow: TextOverflow.ellipsis,
             ),
           ),
