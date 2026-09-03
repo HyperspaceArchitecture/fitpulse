@@ -63,6 +63,14 @@ void main() {
     expect(find.text('Today’s signals'), findsOneWidget);
     expect(find.text('Your week'), findsOneWidget);
 
+    await tester.tap(find.text('Home'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('startup-avatar')), findsOneWidget);
+    expect(find.text('SAM'), findsOneWidget);
+
+    GoRouter.of(tester.element(find.byKey(const Key('startup-avatar'))))
+        .go('/dashboard');
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('View all progress'));
     await tester.tap(find.text('View all progress'));
     await tester.pumpAndSettle();
