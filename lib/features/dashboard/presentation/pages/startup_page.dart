@@ -154,6 +154,8 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                           growth,
                           const SizedBox(height: 18),
                           _ThemeSwitcher(selected: selectedTheme),
+                          const SizedBox(height: 14),
+                          const _EnterAppButton(),
                         ],
                       );
                     }
@@ -170,6 +172,8 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                               growth,
                               const SizedBox(height: 18),
                               _ThemeSwitcher(selected: selectedTheme),
+                              const SizedBox(height: 14),
+                              const _EnterAppButton(),
                             ],
                           ),
                         ),
@@ -323,6 +327,30 @@ class _ThemeSwitcher extends ConsumerWidget {
           showCheckmark: false,
         );
       }).toList(),
+    );
+  }
+}
+
+class _EnterAppButton extends StatelessWidget {
+  const _EnterAppButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: 'Enter FitPulse',
+      child: IconButton.filled(
+        key: const Key('startup-enter'),
+        onPressed: () => context.go(AppRoutes.dashboard),
+        icon: const Icon(Icons.home_rounded),
+        iconSize: 30,
+        style: IconButton.styleFrom(
+          minimumSize: const Size(72, 56),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+      ),
     );
   }
 }
