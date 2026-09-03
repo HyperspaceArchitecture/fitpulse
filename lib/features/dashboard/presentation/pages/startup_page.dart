@@ -401,25 +401,56 @@ class _PulseBuddyState extends State<_PulseBuddy>
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
-    return FadeTransition(
-      opacity: Tween(begin: 0.7, end: 1.0).animate(_controller),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 54,
-            backgroundColor: primary.withValues(alpha: 0.14),
-            child: const Text('🙂', style: TextStyle(fontSize: 52)),
-          ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              'Pulse is here to guide you',
-              style: Theme.of(context).textTheme.titleMedium,
-              overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap: () => showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        builder: (sheetContext) => SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hi, I’m Pulse',
+                  style: Theme.of(sheetContext).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'I’ll help you choose one small action today. Start with your workout, log a meal, or check your progress.',
+                ),
+                const SizedBox(height: 18),
+                FilledButton.icon(
+                  onPressed: () => sheetContext.go(AppRoutes.dashboard),
+                  icon: const Icon(Icons.arrow_forward_rounded),
+                  label: const Text('Show me around'),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
+      ),
+      child: FadeTransition(
+        opacity: Tween(begin: 0.7, end: 1.0).animate(_controller),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 54,
+              backgroundColor: primary.withValues(alpha: 0.14),
+              child: const Text('🙂', style: TextStyle(fontSize: 52)),
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                'Pulse is here to guide you',
+                style: Theme.of(context).textTheme.titleMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
