@@ -24,6 +24,9 @@ export 'app_routes.dart';
 /// Owns the router and disposes it with the provider container.
 final appRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
+    // The product always opens on the quiet progress welcome screen.
+    // The member dashboard is entered from the avatar on that screen.
+    initialLocation: AppRoutes.landing,
     routes: [
       GoRoute(
         path: AppRoutes.landing,
