@@ -1,5 +1,7 @@
 import 'package:fitpulse/core/routing/app_router.dart';
 import 'package:fitpulse/core/theme/app_theme.dart';
+import 'package:fitpulse/core/theme/app_theme_variant.dart';
+import 'package:fitpulse/core/theme/theme_controller.dart';
 import 'package:fitpulse/features/dashboard/data/motivational_quotes.dart';
 import 'package:fitpulse/features/dashboard/presentation/widgets/momentum_needle.dart';
 import 'package:fitpulse/features/onboarding/application/profile_controller.dart';
@@ -45,6 +47,7 @@ class _StartupPageState extends ConsumerState<StartupPage> {
     final lift = latestWorkout?.momentumLift ?? 0;
     final memberName = profile?.displayName.trim();
     final colors = Theme.of(context).extension<FitPulseColors>()!;
+    final selectedTheme = ref.watch(themeControllerProvider).value;
 
     return Scaffold(
       body: DecoratedBox(
@@ -149,6 +152,8 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                           identity,
                           const SizedBox(height: 24),
                           growth,
+                          const SizedBox(height: 18),
+                          _ThemeSwitcher(selected: selectedTheme),
                         ],
                       );
                     }
@@ -157,7 +162,17 @@ class _StartupPageState extends ConsumerState<StartupPage> {
                       children: [
                         Expanded(flex: 4, child: identity),
                         const SizedBox(width: 54),
-                        Expanded(flex: 6, child: growth),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              growth,
+                              const SizedBox(height: 18),
+                              _ThemeSwitcher(selected: selectedTheme),
+                            ],
+                          ),
+                        ),
                       ],
                     );
                   },
@@ -274,6 +289,40 @@ class _GainLine extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ThemeSwitcher extends ConsumerWidget {
+  const _ThemeSwitcher({required this.selected});
+
+  final AppThemeVariant? selected;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 6,
+      children: AppThemeVariant.values.map((variant) {
+        final active = selected == variant;
+        return ChoiceChip(
+          label: Text(variant.label),
+          selected: active,
+          onSelected: (_) =>
+              ref.read(themeControllerProvider.notifier).select(variant),
+          labelStyle: TextStyle(
+            color: active ? Colors.white : primary,
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+          ),
+          selectedColor: primary,
+          backgroundColor: Colors.white.withValues(alpha: 0.72),
+          side: BorderSide(color: primary.withValues(alpha: 0.22)),
+          visualDensity: VisualDensity.compact,
+          showCheckmark: false,
+        );
+      }).toList(),
     );
   }
 }
