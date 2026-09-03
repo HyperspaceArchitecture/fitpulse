@@ -73,7 +73,42 @@ class WorkoutPlanPage extends ConsumerWidget {
                           ),
                           _PlanFact(
                             icon: Icons.repeat_rounded,
-                            text: '${plan.totalSets} working sets',
+                            text: 'View all exercises',
+                            onTap: () => showModalBottomSheet<void>(
+                              context: context,
+                              showDragHandle: true,
+                              builder: (sheetContext) => SafeArea(
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.fromLTRB(
+                                    20,
+                                    8,
+                                    20,
+                                    28,
+                                  ),
+                                  children: [
+                                    Text(
+                                      'All exercises',
+                                      style: Theme.of(sheetContext)
+                                          .textTheme
+                                          .headlineSmall,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    ...plan.exercises.indexed.map(
+                                      (entry) => ListTile(
+                                        leading: CircleAvatar(
+                                          child: Text('${entry.$1 + 1}'),
+                                        ),
+                                        title: Text(entry.$2.name),
+                                        subtitle: Text(
+                                          '${entry.$2.sets} × ${entry.$2.reps} · ${entry.$2.focus}',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -194,13 +229,21 @@ class _ExerciseTile extends StatelessWidget {
 }
 
 class _PlanFact extends StatelessWidget {
-  const _PlanFact({required this.icon, required this.text});
+  const _PlanFact({required this.icon, required this.text, this.onTap});
 
   final IconData icon;
   final String text;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    if (onTap != null) {
+      return ActionChip(
+        avatar: Icon(icon, size: 18),
+        label: Text(text),
+        onPressed: onTap,
+      );
+    }
     return Chip(avatar: Icon(icon, size: 18), label: Text(text));
   }
 }
