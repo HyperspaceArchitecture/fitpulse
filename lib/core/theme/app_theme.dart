@@ -72,6 +72,7 @@ abstract final class FitPulseTheme {
     final palette = switch (variant) {
       AppThemeVariant.athleticDark => _athleticDark,
       AppThemeVariant.illustratedSoft => _illustratedSoft,
+      AppThemeVariant.proAthlete => _proAthlete,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
@@ -223,6 +224,27 @@ abstract final class FitPulseTheme {
       warning: Color(0xFFEF9F27), // Sun Energy (recovery)
       danger: Color(0xFFE96B7A), // Coral Red
       glow: Color(0xFFD4537E), // Rose Pulse glow
+    ),
+  );
+
+  /// Pro Athlete Theme
+  /// Deep green-black canvas with emerald primary.
+  /// Tight geometry, clinical metric readouts, instrument-panel iconography.
+  /// Performance data over motivation: HRV, readiness, RPE, session load.
+  static const _proAthlete = _ThemePalette(
+    brightness: Brightness.dark,
+    primary: Color(0xFF10B981), // Emerald
+    secondary: Color(0xFF5EEAD4), // Aqua Signal
+    tertiary: Color(0xFF84CC16), // Lime Readout
+    friendly: false,
+    fontFamily: 'BarlowCondensed',
+    colors: FitPulseColors(
+      background: Color(0xFF07100D), // Deep Green-Black
+      panel: Color(0xFF0E2621), // Instrument Panel
+      success: Color(0xFF10B981), // Emerald
+      warning: Color(0xFFFBBF24), // Caution Amber
+      danger: Color(0xFFF87171), // Alert Red
+      glow: Color(0xFF10B981), // Emerald glow
     ),
   );
 }

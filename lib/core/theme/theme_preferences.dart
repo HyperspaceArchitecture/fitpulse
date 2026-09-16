@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Persistence boundary for the user's selected visual system.
 abstract interface class ThemePreferences {
-  /// Reads the saved theme, falling back to Graphite.
+  /// Reads the saved theme, falling back to Athletic Dark.
   Future<AppThemeVariant> read();
 
   /// Persists [variant] for future launches.
@@ -22,12 +22,21 @@ class SharedPreferencesThemePreferences implements ThemePreferences {
   @override
   Future<AppThemeVariant> read() async {
     final storedValue = await _preferences.getString(_key);
-    if (storedValue == 'ochre') return AppThemeVariant.studioLilac;
-    if (storedValue == 'pulseBlue') return AppThemeVariant.graphite;
-    if (storedValue == 'cloudPop') return AppThemeVariant.softArcade;
+    // Migrate legacy theme identifiers from earlier builds.
+    const legacy = <String, AppThemeVariant>{
+      'ochre': AppThemeVariant.illustratedSoft,
+      'pulseBlue': AppThemeVariant.athleticDark,
+      'cloudPop': AppThemeVariant.illustratedSoft,
+      'graphite': AppThemeVariant.athleticDark,
+      'studioLilac': AppThemeVariant.illustratedSoft,
+      'softArcade': AppThemeVariant.illustratedSoft,
+      'cosmicPulse': AppThemeVariant.proAthlete,
+    };
+    final migrated = legacy[storedValue];
+    if (migrated != null) return migrated;
     return AppThemeVariant.values.firstWhere(
       (variant) => variant.name == storedValue,
-      orElse: () => AppThemeVariant.graphite,
+      orElse: () => AppThemeVariant.athleticDark,
     );
   }
 

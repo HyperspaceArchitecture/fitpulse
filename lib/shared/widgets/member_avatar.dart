@@ -31,10 +31,9 @@ class MemberAvatar extends ConsumerWidget {
     final avatarId = profile?.avatarId ?? 0;
     if (avatarId == 0) {
       final portraitIndex = switch (theme) {
-        AppThemeVariant.graphite => 0,
-        AppThemeVariant.studioLilac => 1,
-        AppThemeVariant.softArcade => 2,
-        AppThemeVariant.cosmicPulse => 1,
+        AppThemeVariant.athleticDark => 0,
+        AppThemeVariant.illustratedSoft => 2,
+        AppThemeVariant.proAthlete => 1,
         null => 0,
       };
       return _ThemePortrait(radius: radius, index: portraitIndex);

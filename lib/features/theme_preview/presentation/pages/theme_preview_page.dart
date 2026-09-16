@@ -109,7 +109,7 @@ class _Overview extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final variant =
-        ref.watch(themeControllerProvider).value ?? AppThemeVariant.graphite;
+        ref.watch(themeControllerProvider).value ?? AppThemeVariant.athleticDark;
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

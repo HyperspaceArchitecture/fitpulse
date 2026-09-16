@@ -1,5 +1,5 @@
 /// The production visual systems available to FitPulse.
-/// Two primary design directions: athletic dark and illustrated soft.
+/// Three design directions: athletic dark, illustrated soft, and pro athlete.
 enum AppThemeVariant {
   /// Athletic, dark, power-focused. Midnight navy (#1A1A2E) with ignite orange (#FF4D00).
   /// Heavy Barlow Condensed typography, ALL CAPS labels, sport character poses.
@@ -15,6 +15,14 @@ enum AppThemeVariant {
   illustratedSoft(
     'Illustrated',
     'Friendly, approachable, encouraging',
+  ),
+
+  /// Elite, data-driven, clinical. Deep green-black (#07100D) with emerald (#10B981).
+  /// Tight geometry, precise metrics, instrument-panel iconography.
+  /// Performance readouts over motivation: HRV, readiness, RPE, session load.
+  proAthlete(
+    'Pro',
+    'Elite, data-driven, precise',
   );
 
   const AppThemeVariant(this.label, this.description);

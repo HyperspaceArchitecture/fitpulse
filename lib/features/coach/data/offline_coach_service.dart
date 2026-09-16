@@ -1,4 +1,7 @@
+import 'package:fitpulse/core/theme/app_theme_variant.dart';
+import 'package:fitpulse/core/theme/theme_controller.dart';
 import 'package:fitpulse/features/coach/data/omniroute_coach_service.dart';
+import 'package:fitpulse/features/coach/domain/coach_persona.dart';
 import 'package:fitpulse/features/coach/domain/coach_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,6 +58,9 @@ final coachModeProvider = StateProvider<bool>((ref) {
 /// - Offline (deterministic, privacy-first fallback)
 final coachServiceProvider = Provider<CoachService>((ref) {
   final useOmniRoute = ref.watch(coachModeProvider);
+  final variant =
+      ref.watch(themeControllerProvider).value ?? AppThemeVariant.athleticDark;
+  final persona = CoachPersona.forTheme(variant);
 
   if (useOmniRoute) {
     // Try OmniRoute at localhost:20128
@@ -63,6 +69,7 @@ final coachServiceProvider = Provider<CoachService>((ref) {
     return OmniRouteCoachService(
       endpoint: 'http://localhost:20128',
       model: 'auto', // OmniRoute picks the best provider
+      persona: persona, // voice follows the selected theme
     );
   } else {
     // Offline-only (no network access, deterministic)

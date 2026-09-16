@@ -284,7 +284,7 @@ class _QuoteCarousel extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(
-              theme == AppThemeVariant.softArcade ? 28 : 20,
+              theme == AppThemeVariant.illustratedSoft ? 28 : 20,
             ),
             border: Border.all(
               color: Theme.of(context).colorScheme.outlineVariant

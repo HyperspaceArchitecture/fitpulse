@@ -13,7 +13,7 @@ class ThemeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(themeControllerProvider);
-    final selected = state.value ?? AppThemeVariant.graphite;
+    final selected = state.value ?? AppThemeVariant.athleticDark;
 
     void select(AppThemeVariant variant) {
       unawaited(ref.read(themeControllerProvider.notifier).select(variant));
@@ -65,9 +65,8 @@ class ThemeSelector extends ConsumerWidget {
   }
 
   IconData _iconFor(AppThemeVariant variant) => switch (variant) {
-    AppThemeVariant.graphite => Icons.bolt_rounded,
-    AppThemeVariant.studioLilac => Icons.auto_awesome_rounded,
-    AppThemeVariant.softArcade => Icons.bubble_chart_rounded,
-    AppThemeVariant.cosmicPulse => Icons.blur_on_rounded,
+    AppThemeVariant.athleticDark => Icons.bolt_rounded,
+    AppThemeVariant.illustratedSoft => Icons.favorite_rounded,
+    AppThemeVariant.proAthlete => Icons.insights_rounded,
   };
 }

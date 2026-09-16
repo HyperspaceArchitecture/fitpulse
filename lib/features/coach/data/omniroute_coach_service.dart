@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fitpulse/features/coach/domain/coach_persona.dart';
 import 'package:fitpulse/features/coach/domain/coach_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +24,7 @@ class OmniRouteCoachService implements CoachService {
     this.endpoint = 'http://localhost:20128',
     this.model = 'auto',
     this.apiKey,
+    this.persona = CoachPersona.drill,
   });
 
   /// OmniRoute gateway root URL (no /v1 suffix).
@@ -44,16 +46,21 @@ class OmniRouteCoachService implements CoachService {
   /// Can be read from env: `export OMNIROUTE_API_KEY=oma_live_xxx`
   final String? apiKey;
 
+  /// Coaching voice, derived from the user's selected theme.
+  /// See [CoachPersona.forTheme].
+  final CoachPersona persona;
+
   static const _timeout = Duration(seconds: 30);
   static const _maxRetries = 2;
 
-  /// System prompt for the FitPulse AI Coach.
-  static const _systemPrompt = '''You are FitPulse AI Coach, a supportive fitness and recovery expert.
+  /// Safety and scope rules shared by every persona. These are not
+  /// overridable by voice: the persona changes tone, never the boundaries.
+  static const _safetyPrompt = '''You are the FitPulse AI Coach, a fitness and recovery expert.
 
 Your role:
 - Provide safe, evidence-based coaching on workouts, form, recovery, and nutrition
 - Prioritize user safety—flag any signs of overtraining, injury, or medical concerns
-- Offer encouraging, actionable guidance tailored to the user's fitness level
+- Offer actionable guidance tailored to the user's fitness level (tone is set by VOICE below)
 - Keep responses concise (under 150 words unless detail is critical)
 - If asked about medical conditions, strongly encourage professional consultation
 
@@ -62,11 +69,10 @@ Never:
 - Recommend stopping prescribed treatment
 - Provide advice on unlicensed supplements or drugs
 - Assume the user's fitness level or history
+''';
 
-Examples of good responses:
-- "Lower the starting line: aim to do just the warm-up. Starting usually creates momentum."
-- "Pain is a signal to pause. Choose a pain-free variation and check with a clinician if it persists."
-- "One balanced meal matters more than chasing perfect macros all day."''';
+  /// The full system prompt: shared safety rules plus the persona's voice.
+  String get _systemPrompt => '${_safetyPrompt}\n\n${persona.voicePrompt}';
 
   @override
   Future<String> respond(String message) async {
