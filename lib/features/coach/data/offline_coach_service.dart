@@ -1,3 +1,4 @@
+import 'package:fitpulse/features/coach/data/omniroute_coach_service.dart';
 import 'package:fitpulse/features/coach/domain/coach_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,7 +43,29 @@ class OfflineCoachService implements CoachService {
   }
 }
 
+/// Tracks whether OmniRoute is enabled (true) or offline-only (false).
+final coachModeProvider = StateProvider<bool>((ref) {
+  // Default: try OmniRoute first
+  // User can toggle to offline-only from Settings if needed
+  return true;
+});
+
 /// Provides the currently selected coaching implementation.
-final coachServiceProvider = Provider<CoachService>(
-  (ref) => OfflineCoachService(),
-);
+/// - OmniRoute (online, 352+ providers, free tokens)
+/// - Offline (deterministic, privacy-first fallback)
+final coachServiceProvider = Provider<CoachService>((ref) {
+  final useOmniRoute = ref.watch(coachModeProvider);
+
+  if (useOmniRoute) {
+    // Try OmniRoute at localhost:20128
+    // If it's not running, OmniRouteCoachService will gracefully fall back
+    // to safe offline responses on any network error
+    return OmniRouteCoachService(
+      endpoint: 'http://localhost:20128',
+      model: 'auto', // OmniRoute picks the best provider
+    );
+  } else {
+    // Offline-only (no network access, deterministic)
+    return OfflineCoachService();
+  }
+});

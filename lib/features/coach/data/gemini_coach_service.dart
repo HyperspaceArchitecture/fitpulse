@@ -1,10 +1,17 @@
 import 'package:fitpulse/features/coach/domain/coach_service.dart';
 
-/// Placeholder boundary for the future secure Gemini proxy.
+/// Replaced by OmniRouteCoachService (v4.0+).
 ///
-/// The API key must live on a server-side proxy; Flutter should never ship it
-/// in the client bundle. Until that proxy is configured, the offline service
-/// remains the active implementation.
+/// OmniRoute provides:
+/// - 352+ AI providers (150+ free) through one endpoint
+/// - Auto-fallback + quota management
+/// - 15–95% token compression
+/// - ~1.47B free tokens/month from pooled free tiers
+///
+/// The API key requirement is eliminated: OmniRoute routes through free tiers
+/// (OpenCode, Mistral, Groq, etc.) by default, with auto-fallback.
+/// See: https://github.com/diegosouzapw/OmniRoute
+@Deprecated('Use OmniRouteCoachService instead. Kept for reference only.')
 class GeminiCoachService implements CoachService {
   const GeminiCoachService({this.endpoint = '/api/pulse'});
 
@@ -13,7 +20,8 @@ class GeminiCoachService implements CoachService {
   @override
   Future<String> respond(String message) async {
     throw StateError(
-      'Gemini is not configured. Connect the secure proxy at $endpoint.',
+      'Gemini service is deprecated. Use OmniRouteCoachService instead.\n'
+      'See: https://github.com/diegosouzapw/OmniRoute',
     );
   }
 }
