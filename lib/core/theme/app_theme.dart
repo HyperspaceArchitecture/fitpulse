@@ -70,10 +70,8 @@ abstract final class FitPulseTheme {
   /// Returns the premium editorial theme for [variant].
   static ThemeData forVariant(AppThemeVariant variant) {
     final palette = switch (variant) {
-      AppThemeVariant.graphite => _graphite,
-      AppThemeVariant.studioLilac => _studioLilac,
-      AppThemeVariant.softArcade => _softArcade,
-      AppThemeVariant.cosmicPulse => _cosmicPulse,
+      AppThemeVariant.athleticDark => _athleticDark,
+      AppThemeVariant.illustratedSoft => _illustratedSoft,
     };
     final scheme = ColorScheme.fromSeed(
       seedColor: palette.primary,
@@ -186,68 +184,45 @@ abstract final class FitPulseTheme {
     );
   }
 
-  static const _graphite = _ThemePalette(
+  /// Athletic Dark Theme
+  /// Midnight navy canvas with ignite orange primary.
+  /// Heavy Barlow Condensed typography, ALL CAPS labels.
+  /// Dark panels with left accent bands + sport character poses.
+  static const _athleticDark = _ThemePalette(
     brightness: Brightness.dark,
-    primary: Color(0xFF4D8DFF),
-    secondary: Color(0xFF55D6A5),
-    tertiary: Color(0xFFFFB35A),
+    primary: Color(0xFFFF4D00), // Ignite Orange
+    secondary: Color(0xFF55D6A5), // Pulse Green
+    tertiary: Color(0xFFFFB35A), // Warm Amber
     friendly: false,
+    fontFamily: 'BarlowCondensed',
     colors: FitPulseColors(
-      background: Color(0xFF111418),
-      panel: Color(0xFF1B2027),
-      success: Color(0xFF55D6A5),
-      warning: Color(0xFFFFB35A),
-      danger: Color(0xFFFF6577),
-      glow: Color(0xFF244F91),
+      background: Color(0xFF1A1A2E), // Midnight Navy
+      panel: Color(0xFF252540), // Dark Panel
+      success: Color(0xFF55D6A5), // Pulse Green
+      warning: Color(0xFFFFB35A), // Warm Amber (recovery)
+      danger: Color(0xFFFF6B7A), // Alert Red
+      glow: Color(0xFFFF4D00), // Ignite Orange glow
     ),
   );
 
-  static const _studioLilac = _ThemePalette(
+  /// Illustrated Soft Theme
+  /// Warm cream background with rose pulse primary.
+  /// Rounded pills, emoji faces, pastel category cards.
+  /// Illustrated characters with expressive faces.
+  static const _illustratedSoft = _ThemePalette(
     brightness: Brightness.light,
-    primary: Color(0xFFB69AE8),
-    secondary: Color(0xFFF1C9D4),
-    tertiary: Color(0xFFEF405F),
-    friendly: false,
-    colors: FitPulseColors(
-      background: Color(0xFFF1F0EF),
-      panel: Color(0xFFFFFFFF),
-      success: Color(0xFF78A883),
-      warning: Color(0xFFE0A84A),
-      danger: Color(0xFFEF405F),
-      glow: Color(0xFFDCC8F5),
-    ),
-  );
-
-  static const _softArcade = _ThemePalette(
-    brightness: Brightness.light,
-    primary: Color(0xFF6F63D9),
-    secondary: Color(0xFFFF9B86),
-    tertiary: Color(0xFF68C4BF),
+    primary: Color(0xFFD4537E), // Rose Pulse (cardio/energy)
+    secondary: Color(0xFF7F77DD), // Lavender Lift (strength)
+    tertiary: Color(0xFF1D9E75), // Mint Growth (nutrition)
     friendly: true,
     fontFamily: 'Fredoka',
     colors: FitPulseColors(
-      background: Color(0xFFFFF9F3),
-      panel: Color(0xFFFFFFFF),
-      success: Color(0xFF55B99D),
-      warning: Color(0xFFF5C15B),
-      danger: Color(0xFFE96F79),
-      glow: Color(0xFFD8D1FF),
-    ),
-  );
-
-  static const _cosmicPulse = _ThemePalette(
-    brightness: Brightness.dark,
-    primary: Color(0xFF8C7CFF),
-    secondary: Color(0xFF55D9FF),
-    tertiary: Color(0xFFFF7BD5),
-    friendly: false,
-    colors: FitPulseColors(
-      background: Color(0xFF090D2B),
-      panel: Color(0xFF11184A),
-      success: Color(0xFF55D9FF),
-      warning: Color(0xFFFFC857),
-      danger: Color(0xFFFF6B9D),
-      glow: Color(0xFF4035A8),
+      background: Color(0xFFFFF6F0), // Warm Cream
+      panel: Color(0xFFFFFFFF), // White card
+      success: Color(0xFF1D9E75), // Mint Growth
+      warning: Color(0xFFEF9F27), // Sun Energy (recovery)
+      danger: Color(0xFFE96B7A), // Coral Red
+      glow: Color(0xFFD4537E), // Rose Pulse glow
     ),
   );
 }
